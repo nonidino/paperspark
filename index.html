@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PaperSpark — Research Reels</title>
+  <meta name="description" content="Swipe through AI-summarized research papers from arXiv. Like TikTok, but for science.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/index.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#06080f">
+</head>
+<body>
+  <!-- Toast -->
+  <div id="toast-container"></div>
+
+  <!-- API Key modal -->
+  <div id="api-key-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <div class="overlay-icon">🔑</div>
+      <h2 class="overlay-title">Claude API Key</h2>
+      <p class="overlay-desc">Enter your Anthropic API key to enable AI-powered summaries. Your key is stored locally and never shared.</p>
+      <input type="password" class="input-field" id="api-key-input" placeholder="sk-ant-api03-...">
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button class="btn btn-secondary" id="api-key-skip-btn" style="flex:1">Skip</button>
+        <button class="btn btn-primary" id="api-key-save-btn" style="flex:1">Save Key</button>
+      </div>
+      <p class="overlay-hint">Without a key, you'll see abstracts only (no AI summaries).</p>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="app">
+    <!-- Reels Feed (main view) -->
+    <div id="reels-feed" class="reels-container">
+      <!-- Cards injected here -->
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner-lg"></div>
+        <p class="loading-text">Loading research papers...</p>
+      </div>
+    </div>
+
+    <!-- Side action bar (like TikTok) -->
+    <div id="side-actions" class="side-actions hidden">
+      <button class="side-btn" id="btn-like" title="Like">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span class="side-btn-label" id="like-label">Like</span>
+      </button>
+      <button class="side-btn" id="btn-dislike" title="Not interested">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3zm7-13h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17"/></svg>
+        <span class="side-btn-label">Skip</span>
+      </button>
+      <button class="side-btn" id="btn-save" title="Save">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        <span class="side-btn-label" id="save-label">Save</span>
+      </button>
+      <button class="side-btn" id="btn-share" title="Copy link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span class="side-btn-label">Share</span>
+      </button>
+    </div>
+
+    <!-- Bottom nav -->
+    <nav id="bottom-nav">
+      <button class="nav-btn active" data-view="feed" id="nav-feed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <span>Feed</span>
+      </button>
+      <button class="nav-btn" data-view="saved" id="nav-saved">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        <span>Saved</span>
+        <span class="nav-badge hidden" id="saved-badge">0</span>
+      </button>
+      <button class="nav-btn" data-view="settings" id="nav-settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+    <!-- Saved view (hidden by default) -->
+    <div id="saved-view" class="page-view hidden">
+      <header class="page-header">
+        <h1 class="page-title">Saved Papers</h1>
+        <button class="btn-icon-close" id="saved-back-btn">&times;</button>
+      </header>
+      <div id="saved-list" class="saved-list"></div>
+    </div>
+
+    <!-- Settings view (hidden by default) -->
+    <div id="settings-view" class="page-view hidden">
+      <header class="page-header">
+        <h1 class="page-title">Settings</h1>
+        <button class="btn-icon-close" id="settings-back-btn">&times;</button>
+      </header>
+      <div id="settings-content" class="settings-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
