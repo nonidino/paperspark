@@ -6,7 +6,7 @@ import {
   getSavedCards, toggleSave, isCardSaved, isLiked, isDisliked,
   toggleLike, toggleDislike, getCategories, setCategories,
   getCachedSummary, cacheSummary, hasSeenApiPrompt, markApiPromptSeen,
-  clearAllData
+  clearAllData, updateSavedCardNote
 } from './storage.js';
 import { showToast } from './toast.js';
 
@@ -480,11 +480,17 @@ function renderSavedList() {
     <div class="saved-item" data-arxiv-id="${c.arxivId}">
       <div class="saved-item-info">
         <div class="saved-item-title">${esc(c.title)}</div>
+        ${c.note ? `<div class="saved-item-note">📝 ${esc(c.note)}</div>` : ''}
         <div class="saved-item-meta">${esc(formatAuthors(c.authors))} · ${formatDate(c.savedAt ? new Date(c.savedAt).toISOString() : c.published)}</div>
       </div>
-      <button class="saved-item-unsave" data-arxiv-id="${c.arxivId}" title="Remove">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <div class="saved-item-actions">
+        <button class="saved-item-edit" data-arxiv-id="${c.arxivId}" data-note="${esc(c.note || '')}" title="Add/Edit Note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        </button>
+        <button class="saved-item-unsave" data-arxiv-id="${c.arxivId}" title="Remove">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
     </div>
   `).join('');
 
@@ -497,6 +503,19 @@ function renderSavedList() {
       showToast('Removed', 'info');
       updateSavedBadge();
       renderSavedList();
+    });
+  });
+
+  container.querySelectorAll('.saved-item-edit').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.arxivId;
+      const currentNote = btn.dataset.note || '';
+      const note = window.prompt("Add a tagline or note for this paper:", currentNote);
+      if (note !== null) {
+        updateSavedCardNote(id, note.trim());
+        renderSavedList();
+      }
     });
   });
 

@@ -27,6 +27,15 @@ export function removeSavedCard(arxivId) {
   localStorage.setItem(KEYS.savedCards, JSON.stringify(cards));
 }
 
+export function updateSavedCardNote(arxivId, note) {
+  const cards = getSavedCards();
+  const index = cards.findIndex(c => c.arxivId === arxivId);
+  if (index !== -1) {
+    cards[index].note = note;
+    localStorage.setItem(KEYS.savedCards, JSON.stringify(cards));
+  }
+}
+
 export function isCardSaved(arxivId) {
   return getSavedCards().some(c => c.arxivId === arxivId);
 }

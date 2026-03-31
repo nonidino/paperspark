@@ -618,6 +618,23 @@ a { color: var(--text-link); text-decoration: none; }
   color: var(--text-muted);
 }
 
+.saved-item-note {
+  font-size: 12px;
+  color: var(--accent-purple);
+  margin-bottom: 4px;
+  background: rgba(124, 58, 237, 0.08);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.saved-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.saved-item-edit,
 .saved-item-unsave {
   width: 32px;
   height: 32px;
