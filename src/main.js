@@ -391,6 +391,13 @@ function setupNavigation() {
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const view = btn.dataset.view;
+
+      // Close if tapping the already active tab (like a toggle)
+      if (btn.classList.contains('active') && view !== 'feed') {
+        closeAllViews();
+        return;
+      }
+
       if (view === 'feed') {
         closeAllViews();
       } else if (view === 'saved') {
@@ -406,6 +413,29 @@ function setupNavigation() {
 
   document.getElementById('saved-back-btn')?.addEventListener('click', closeAllViews);
   document.getElementById('settings-back-btn')?.addEventListener('click', closeAllViews);
+
+  // Swipe-down to close gestures like native mobile views
+  document.querySelectorAll('.page-view').forEach(view => {
+    let touchStartY = 0;
+    view.addEventListener('touchstart', e => {
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    
+    view.addEventListener('touchend', e => {
+      const touchEndY = e.changedTouches[0].screenY;
+      
+      // Look for the scrollable container inside this view
+      const content = view.querySelector('.saved-list, .settings-content');
+      
+      // Only close if the content is scrolled all the way up (or if we swiped on the header where there is no content)
+      const isAtTop = !content || content.scrollTop <= 0;
+
+      // If they swiped down more than 70px from the top of the content
+      if (isAtTop && (touchEndY - touchStartY > 70)) { 
+        closeAllViews();
+      }
+    }, { passive: true });
+  });
 }
 
 function closeAllViews() {
