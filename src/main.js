@@ -14,6 +14,7 @@ import { showToast } from './toast.js';
 let papers = [];          // loaded papers with generated cards
 let currentIndex = 0;     // which paper is currently in view
 let isLoadingMore = false;
+let feedExhausted = false;  // no more papers available for the chosen categories
 const BUFFER_SIZE = 7;    // pre-load this many papers
 const ACCENT_COLORS = ['purple', 'green', 'blue', 'orange', 'pink', 'cyan'];
 
@@ -34,6 +35,7 @@ function init() {
 async function startFeed() {
   const loading = document.getElementById('loading-overlay');
   loading.classList.remove('hidden');
+  feedExhausted = false;
 
   try {
     await loadPapers();
@@ -251,7 +253,7 @@ function onScroll() {
     updateCurrentIndex();
 
     // Load more when near the end
-    if (currentIndex >= papers.length - 3 && !isLoadingMore) {
+    if (currentIndex >= papers.length - 3 && !isLoadingMore && !feedExhausted) {
       loadMorePapers();
     }
   }, 100);
@@ -279,6 +281,9 @@ async function loadMorePapers() {
   try {
     const prevLen = papers.length;
     await loadPapers(true);
+
+    // Reached the end of what's available for these categories.
+    if (papers.length === prevLen) feedExhausted = true;
 
     // Append new cards to DOM
     const container = document.getElementById('reels-feed');
@@ -633,7 +638,7 @@ function renderSettings() {
     btn.disabled = true;
     btn.innerHTML = '<div class="spinner-sm"></div> Validating...';
 
-    const valid = await validateApiKey(val);
+    const { valid, error } = await validateApiKey(val);
     if (valid) {
       setApiKey(val);
       showToast('Key saved! ✅', 'success');
@@ -645,7 +650,7 @@ function renderSettings() {
         }
       });
     } else {
-      showToast('Invalid key', 'error');
+      showToast(error || 'Invalid key', 'error');
       btn.disabled = false;
       btn.textContent = 'Save & Validate';
     }
@@ -699,7 +704,7 @@ function setupApiKeyModal() {
     btn.disabled = true;
     btn.innerHTML = '<div class="spinner-sm"></div>';
 
-    const valid = await validateApiKey(val);
+    const { valid, error } = await validateApiKey(val);
     if (valid) {
       setApiKey(val);
       markApiPromptSeen();
@@ -707,7 +712,7 @@ function setupApiKeyModal() {
       showToast('API key saved! ✅', 'success');
       startFeed();
     } else {
-      showToast('Invalid API key', 'error');
+      showToast(error || 'Invalid API key', 'error');
       btn.disabled = false;
       btn.textContent = 'Save Key';
     }

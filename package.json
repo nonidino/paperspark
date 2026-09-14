@@ -1,0 +1,9 @@
+{
+  "name": "paperspark",
+  "private": true,
+  "type": "module",
+  "description": "TikTok-style arXiv research feed with AI-powered summaries",
+  "scripts": {
+    "fetch-papers": "node scripts/fetch-papers.mjs"
+  }
+}

@@ -1,9 +1,19 @@
+const ARXIV_API = 'https://export.arxiv.org/api/query';
+
+// Papers are prefetched at build time by scripts/fetch-papers.mjs and served
+// from this site's own origin, so the normal path needs no CORS proxy at all.
+// Resolved from import.meta.url so it works at /paperspark/ and at the root.
+const DATA_BASE = new URL('../data/', import.meta.url);
+
+// Live fallback, used only when the prebuilt snapshot is missing a category.
+// Public CORS proxies are unreliable (arXiv rate-limits their shared IPs), so
+// every attempt is time-boxed and failure here is not fatal.
 const CORS_PROXIES = [
-  (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url) => `https://cors.redoc.ly/${url}`,
   (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
   (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
 ];
-const ARXIV_API = 'https://export.arxiv.org/api/query';
+const PROXY_TIMEOUT_MS = 8000;
 
 /**
  * Parse an arXiv Atom XML response into structured paper objects
@@ -65,30 +75,84 @@ function parseAtomResponse(xmlText) {
   return papers;
 }
 
-/**
- * Fetch from arXiv using CORS proxies (arXiv doesn't support CORS headers).
- * Tries multiple proxies as fallback.
- */
-async function fetchArxiv(queryUrl) {
-  let lastError = null;
+// Per-category memo, so paging to the end of the feed doesn't refetch the
+// snapshots on every scroll tick.
+const staticCache = new Map();
 
-  for (const makeProxy of CORS_PROXIES) {
-    try {
-      const proxyUrl = makeProxy(queryUrl);
-      const resp = await fetch(proxyUrl);
-      if (!resp.ok) continue;
-      const text = await resp.text();
-      // Verify we got valid XML
-      if (text.includes('<feed') || text.includes('<entry')) {
-        return text;
-      }
-    } catch (e) {
-      lastError = e;
-      continue;
-    }
+/**
+ * Load a category's prebuilt paper list from this site's own origin.
+ * Returns [] if that category wasn't part of the last build.
+ */
+function fetchStaticCategory(cat) {
+  if (!staticCache.has(cat)) {
+    // Don't memoize an empty result — a transient failure should be retryable.
+    const pending = loadStaticCategory(cat).then((papers) => {
+      if (papers.length === 0) staticCache.delete(cat);
+      return papers;
+    });
+    staticCache.set(cat, pending);
+  }
+  return staticCache.get(cat);
+}
+
+async function loadStaticCategory(cat) {
+  try {
+    const resp = await fetch(new URL(`${encodeURIComponent(cat)}.json`, DATA_BASE), {
+      signal: AbortSignal.timeout(PROXY_TIMEOUT_MS),
+    });
+    if (!resp.ok) return [];
+    const data = await resp.json();
+    return Array.isArray(data?.papers) ? data.papers : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Merge the prebuilt snapshots for several categories, newest first.
+ */
+async function fetchStatic(categories) {
+  const lists = await Promise.all(categories.map(fetchStaticCategory));
+
+  const seen = new Set();
+  const merged = [];
+  for (const paper of lists.flat()) {
+    if (!paper?.arxivId || seen.has(paper.arxivId)) continue;
+    seen.add(paper.arxivId);
+    merged.push(paper);
   }
 
-  throw new Error(lastError?.message || 'All CORS proxies failed. Please try again later.');
+  merged.sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0));
+  return merged;
+}
+
+/**
+ * Fetch live from arXiv through a CORS proxy (arXiv sends no CORS headers).
+ * Each proxy is time-boxed so a hung request can't stall the feed.
+ */
+async function fetchArxiv(queryUrl) {
+  // Raced rather than tried in turn: these proxies fail slowly and often, so
+  // going one-by-one would stack their timeouts into a very long stall.
+  const attempts = CORS_PROXIES.map(async (makeProxy) => {
+    const resp = await fetch(makeProxy(queryUrl), {
+      signal: AbortSignal.timeout(PROXY_TIMEOUT_MS),
+    });
+    if (!resp.ok) throw new Error(`proxy returned ${resp.status}`);
+
+    const text = await resp.text();
+    // An over-quota proxy gets a plain-text "Rate exceeded." from arXiv, which
+    // still arrives as a 200 — so check that we actually got a feed back.
+    if (!text.includes('<feed') && !text.includes('<entry')) {
+      throw new Error('proxy returned no feed');
+    }
+    return text;
+  });
+
+  try {
+    return await Promise.any(attempts);
+  } catch {
+    throw new Error('Could not reach arXiv. Please try again later.');
+  }
 }
 
 
@@ -125,10 +189,18 @@ export async function fetchById(arxivId) {
 }
 
 /**
- * Fetch recent papers by category
+ * Fetch recent papers by category.
+ *
+ * Reads the prebuilt snapshot first (same-origin, instant, never rate-limited)
+ * and only reaches for a live proxied query if that turns up nothing.
  */
 export async function fetchRecent(categories = ['cs.AI'], maxResults = 10) {
-  const catQuery = categories.map(c => `cat:${c}`).join('+OR+');
+  const cats = categories.length ? categories : ['cs.AI'];
+
+  const cached = await fetchStatic(cats);
+  if (cached.length > 0) return cached.slice(0, maxResults);
+
+  const catQuery = cats.map(c => `cat:${c}`).join('+OR+');
   const url = `${ARXIV_API}?search_query=${catQuery}&max_results=${maxResults}&sortBy=submittedDate&sortOrder=descending`;
   const text = await fetchArxiv(url);
   return parseAtomResponse(text);
