@@ -11,15 +11,45 @@ const MODEL = 'claude-opus-5';
 // max_tokens — too small a budget and the reply comes back empty.
 const MAX_TOKENS = 16000;
 
-const BASE_HEADERS = (apiKey) => ({
-  'Content-Type': 'application/json',
-  'x-api-key': apiKey,
-  'anthropic-version': '2023-06-01',
-  // Required for browser-side calls; without it the request is blocked by CORS.
-  'anthropic-dangerous-direct-browser-access': 'true',
+const FALLBACK_BETA = 'server-side-fallback-2026-07-01';
+
+function buildHeaders(apiKey, withFallback) {
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-api-key': apiKey,
+    'anthropic-version': '2023-06-01',
+    // Required for browser-side calls; without it the request is blocked by CORS.
+    'anthropic-dangerous-direct-browser-access': 'true',
+  };
   // Lets the API re-run a declined request on a fallback model in the same call.
-  'anthropic-beta': 'server-side-fallback-2026-07-01',
-});
+  if (withFallback) headers['anthropic-beta'] = FALLBACK_BETA;
+  return headers;
+}
+
+/**
+ * POST to the Messages API. Refusal fallbacks are a nice-to-have, so if the API
+ * rejects that beta we retry once without it rather than losing the summary.
+ */
+async function postMessage(apiKey, body) {
+  let resp = await fetch(CLAUDE_API_URL, {
+    method: 'POST',
+    headers: buildHeaders(apiKey, true),
+    body: JSON.stringify({ ...body, fallbacks: 'default' }),
+  });
+
+  if (resp.status === 400) {
+    const detail = await resp.clone().text().catch(() => '');
+    if (/fallback|beta/i.test(detail)) {
+      resp = await fetch(CLAUDE_API_URL, {
+        method: 'POST',
+        headers: buildHeaders(apiKey, false),
+        body: JSON.stringify(body),
+      });
+    }
+  }
+
+  return resp;
+}
 
 export function getApiKey() {
   return localStorage.getItem('paperspark_api_key') || '';
@@ -82,17 +112,12 @@ Abstract: ${paper.abstract}
 
 Write only the summary, nothing else.`;
 
-  const resp = await fetch(CLAUDE_API_URL, {
-    method: 'POST',
-    headers: BASE_HEADERS(apiKey),
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      // Short, routine summarization — low effort keeps latency and cost down.
-      output_config: { effort: 'low' },
-      fallbacks: 'default',
-      messages: [{ role: 'user', content: prompt }],
-    }),
+  const resp = await postMessage(apiKey, {
+    model: MODEL,
+    max_tokens: MAX_TOKENS,
+    // Short, routine summarization — low effort keeps latency and cost down.
+    output_config: { effort: 'low' },
+    messages: [{ role: 'user', content: prompt }],
   });
 
   if (!resp.ok) throw new Error(await describeError(resp));
@@ -113,16 +138,11 @@ Write only the summary, nothing else.`;
  */
 export async function validateApiKey(key) {
   try {
-    const resp = await fetch(CLAUDE_API_URL, {
-      method: 'POST',
-      headers: BASE_HEADERS(key),
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 1024,
-        output_config: { effort: 'low' },
-        fallbacks: 'default',
-        messages: [{ role: 'user', content: 'Reply with the single word: ok' }],
-      }),
+    const resp = await postMessage(key, {
+      model: MODEL,
+      max_tokens: 1024,
+      output_config: { effort: 'low' },
+      messages: [{ role: 'user', content: 'Reply with the single word: ok' }],
     });
 
     if (resp.ok) return { valid: true };
