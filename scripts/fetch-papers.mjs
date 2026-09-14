@@ -19,7 +19,16 @@ const DATA_DIR = join(ROOT, 'data');
 const ARXIV_API = 'https://export.arxiv.org/api/query';
 const PER_CATEGORY = 30;    // papers stored per category
 const DELAY_MS = 3000;      // arXiv asks for ~3s between requests
-const MAX_ATTEMPTS = 3;
+// Only ~10 requests per run, so patient retries are cheap insurance against
+// arXiv's throttling (backoff goes 9s, 27s, 81s).
+const MAX_ATTEMPTS = 4;
+
+// One OR'd query over every category, paged, rather than a request per
+// category: ~10 requests instead of ~95. arXiv throttles hard (GitHub's
+// runners share IPs with everyone else hitting it), and each extra request is
+// another chance to get a 429 and burn minutes on backoff.
+const PAGE_SIZE = 200;      // arXiv's practical per-request maximum
+const MAX_PAGES = 10;       // 10 x 200 = the 2000 most recent papers
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -114,23 +123,25 @@ function parseAtom(xml) {
 
 // --- Fetching ---
 
-async function fetchCategory(cat) {
+/**
+ * Fetch one page of the combined query. Returns [] when the page is empty,
+ * which is how we detect the end of the result set.
+ */
+async function fetchPage(searchQuery, start) {
   const url = ARXIV_API
-    + '?search_query=cat:' + encodeURIComponent(cat)
-    + '&max_results=' + PER_CATEGORY
+    + '?search_query=' + searchQuery
+    + '&start=' + start
+    + '&max_results=' + PAGE_SIZE
     + '&sortBy=submittedDate&sortOrder=descending';
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
       const resp = await fetch(url, {
         headers: { 'User-Agent': 'PaperSpark/1.0 (+https://github.com/nonidino/paperspark)' },
-        signal: AbortSignal.timeout(45000),
+        signal: AbortSignal.timeout(60000),
       });
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
-
-      const papers = parseAtom(await resp.text());
-      if (papers.length === 0) throw new Error('no entries parsed');
-      return papers;
+      return parseAtom(await resp.text());
     } catch (err) {
       if (attempt === MAX_ATTEMPTS) throw err;
       const backoff = DELAY_MS * Math.pow(3, attempt); // 9s, then 27s
@@ -138,6 +149,53 @@ async function fetchCategory(cat) {
       await sleep(backoff);
     }
   }
+}
+
+/**
+ * Pull the most recent papers across every category in one paged sweep, then
+ * bucket them by category. A paper listed under several categories shows up in
+ * each of them, which matches what "recent papers in this category" should mean.
+ */
+async function fetchAllCategories(cats) {
+  const searchQuery = cats.map((c) => 'cat:' + c).join('+OR+');
+  const buckets = new Map(cats.map((c) => [c, []]));
+  const known = new Set(cats);
+  const seen = new Set();
+
+  let fetched = 0;
+
+  for (let page = 0; page < MAX_PAGES; page++) {
+    const start = page * PAGE_SIZE;
+    process.stdout.write('  page ' + (page + 1) + '/' + MAX_PAGES + ' (start=' + start + ') ... ');
+
+    let papers;
+    try {
+      papers = await fetchPage(searchQuery, start);
+    } catch (err) {
+      // Keep the pages we already have rather than losing the whole sweep.
+      console.log('FAILED (' + err.message + ') — stopping here');
+      break;
+    }
+    console.log(papers.length + ' entries');
+    if (papers.length === 0) break;
+
+    for (const paper of papers) {
+      if (seen.has(paper.arxivId)) continue;
+      seen.add(paper.arxivId);
+      fetched++;
+      for (const cat of paper.categories) {
+        if (!known.has(cat)) continue;
+        const bucket = buckets.get(cat);
+        if (bucket.length < PER_CATEGORY) bucket.push(paper);
+      }
+    }
+
+    if (papers.length < PAGE_SIZE) break; // ran past the end of the results
+    if (page < MAX_PAGES - 1) await sleep(DELAY_MS);
+  }
+
+  console.log('  collected ' + fetched + ' unique papers');
+  return buckets;
 }
 
 async function main() {
@@ -154,41 +212,49 @@ async function main() {
   let reused = 0;
   let failed = 0;
 
-  for (const [i, cat] of cats.entries()) {
-    const file = join(DATA_DIR, cat + '.json');
-    process.stdout.write('[' + (i + 1) + '/' + cats.length + '] ' + cat + ' ... ');
+  console.log('Fetching ' + cats.length + ' categories in one paged sweep...');
 
-    try {
-      const papers = await fetchCategory(cat);
+  let buckets;
+  try {
+    buckets = await fetchAllCategories(cats);
+  } catch (err) {
+    // Total failure: fall back to whatever the cache holds for every category.
+    console.log('Sweep failed (' + err.message + ') — falling back to cached data');
+    buckets = new Map(cats.map((c) => [c, []]));
+  }
+
+  for (const cat of cats) {
+    const file = join(DATA_DIR, cat + '.json');
+    const papers = buckets.get(cat) || [];
+
+    if (papers.length > 0) {
       await writeFile(file, JSON.stringify({
         category: cat,
         fetchedAt: new Date().toISOString(),
         papers,
       }));
-      console.log(papers.length + ' papers');
       index.categories[cat] = papers.length;
       ok++;
-    } catch (err) {
-      // Keep whatever a previous (cached) run stored rather than dropping the
-      // category entirely — stale papers beat an empty feed.
-      let kept = false;
-      if (existsSync(file)) {
-        try {
-          const prev = JSON.parse(await readFile(file, 'utf8'));
-          const n = prev.papers ? prev.papers.length : 0;
-          console.log('FAILED (' + err.message + ') — keeping ' + n + ' cached');
-          index.categories[cat] = n;
-          reused++;
-          kept = true;
-        } catch { /* fall through to the failure path */ }
-      }
-      if (!kept) {
-        console.log('FAILED (' + err.message + ') — no cached copy');
-        failed++;
-      }
+      continue;
     }
 
-    if (i < cats.length - 1) await sleep(DELAY_MS);
+    // Nothing new for this category — keep the previous run's papers rather
+    // than dropping it. Stale papers beat an empty feed.
+    if (existsSync(file)) {
+      try {
+        const prev = JSON.parse(await readFile(file, 'utf8'));
+        const n = prev.papers ? prev.papers.length : 0;
+        if (n > 0) {
+          console.log('  ' + cat + ': no new papers — keeping ' + n + ' cached');
+          index.categories[cat] = n;
+          reused++;
+          continue;
+        }
+      } catch { /* fall through to the failure path */ }
+    }
+
+    console.log('  ' + cat + ': no papers and no cached copy');
+    failed++;
   }
 
   await writeFile(join(DATA_DIR, 'index.json'), JSON.stringify(index, null, 2));
