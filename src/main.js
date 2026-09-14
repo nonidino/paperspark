@@ -1,7 +1,9 @@
 // main.js — PaperSpark: TikTok-style research paper feed
 
 import { fetchRecent, ARXIV_CATEGORIES, getCategoryLabel } from './arxiv.js';
-import { generateSummary, getApiKey, setApiKey, removeApiKey, validateApiKey } from './claude.js';
+import {
+  generateSummary, getApiKey, setApiKey, removeApiKey, validateApiKey, clearLegacyKey
+} from './deepseek.js';
 import {
   getSavedCards, toggleSave, isCardSaved, isLiked, isDisliked,
   toggleLike, toggleDislike, getCategories, setCategories,
@@ -20,6 +22,7 @@ const ACCENT_COLORS = ['purple', 'green', 'blue', 'orange', 'pink', 'cyan'];
 
 // --- Init ---
 function init() {
+  clearLegacyKey();
   setupNavigation();
   setupSideActions();
   setupApiKeyModal();
@@ -591,14 +594,14 @@ function renderSettings() {
 
   container.innerHTML = `
     <div class="settings-section">
-      <div class="settings-section-title">🔑 Claude API Key</div>
+      <div class="settings-section-title">🔑 DeepSeek API Key</div>
       ${key ? `
         <div class="settings-row">
           <span class="settings-row-value">${masked}</span>
           <button class="btn btn-danger btn-sm" id="settings-remove-key">Remove</button>
         </div>
       ` : `
-        <input type="password" class="input-field" id="settings-key-input" placeholder="sk-ant-api03-..." style="margin-bottom:8px">
+        <input type="password" class="input-field" id="settings-key-input" placeholder="sk-..." style="margin-bottom:8px">
         <button class="btn btn-primary w-full" id="settings-save-key">Save & Validate</button>
       `}
       <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Key stored locally. Enables AI-generated summaries.</p>
