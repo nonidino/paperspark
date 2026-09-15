@@ -851,6 +851,48 @@ a { color: var(--text-link); text-decoration: none; }
 .cat-source-body .cat-group-header { background: transparent; }
 .cat-source-body .cat-group-header:hover { background: var(--bg-surface-raised); }
 
+/* Selection toolbar above the source list */
+.cats-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 2px 10px;
+}
+
+.cats-total {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.btn-link {
+  margin-left: auto;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-purple);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-link:hover:not(:disabled) {
+  color: var(--text-link, var(--accent-purple));
+  border-color: var(--border-accent, var(--accent-purple));
+}
+
+.btn-link:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Make a source with picks stand out in a long collapsed list */
+.cat-source.has-selection .cat-source-header {
+  box-shadow: inset 3px 0 0 var(--accent-purple);
+}
+
 .settings-hint {
   font-size: 12px;
   color: var(--text-muted);

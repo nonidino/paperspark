@@ -620,6 +620,48 @@ async function renderCategoryPicker() {
       </div>
     `;
   }).join('');
+
+  refreshSelectionCounts();
+}
+
+/**
+ * Recompute every "N selected" label from the chips currently active.
+ * The counts are rendered once with the picker, so without this they go stale
+ * the moment a chip is toggled — which is most of why a long selection is hard
+ * to keep track of.
+ */
+function refreshSelectionCounts() {
+  const root = document.getElementById('settings-cats');
+  if (!root) return;
+
+  for (const group of root.querySelectorAll('.cat-group')) {
+    const total = group.querySelectorAll('.chip').length;
+    const active = group.querySelectorAll('.chip.active').length;
+    const el = group.querySelector('.cat-group-count');
+    if (el) el.textContent = active > 0 ? `${active} selected` : `${total}`;
+  }
+
+  for (const source of root.querySelectorAll('.cat-source')) {
+    const total = source.querySelectorAll('.chip').length;
+    const active = source.querySelectorAll('.chip.active').length;
+    const el = source.querySelector('.cat-source-meta');
+    if (el) el.textContent = active > 0 ? `${active} selected` : `${total} categories`;
+    source.classList.toggle('has-selection', active > 0);
+  }
+
+  const activeChips = [...root.querySelectorAll('.chip.active')];
+  const active = activeChips.length;
+  const sourceCount = new Set(activeChips.map((c) => c.dataset.cat.split(':')[0])).size;
+
+  const totalEl = document.getElementById('cats-total');
+  if (totalEl) {
+    totalEl.textContent = active === 0
+      ? 'Nothing selected'
+      : `${active} selected across ${sourceCount} source${sourceCount === 1 ? '' : 's'}`;
+  }
+
+  const deselect = document.getElementById('settings-deselect-all');
+  if (deselect) deselect.disabled = active === 0;
 }
 
 function renderChips(categories, selected) {
@@ -655,6 +697,10 @@ function renderSettings() {
 
     <div class="settings-section">
       <div class="settings-section-title">📡 Research Categories</div>
+      <div class="cats-toolbar">
+        <span class="cats-total" id="cats-total">—</span>
+        <button class="btn-link" id="settings-deselect-all">Deselect all</button>
+      </div>
       <div id="settings-cats"><p class="settings-hint">Loading categories…</p></div>
       <button class="btn btn-primary btn-sm w-full mt-8" id="settings-apply-cats">Apply & Reload Feed</button>
     </div>
@@ -708,7 +754,11 @@ function renderSettings() {
   document.getElementById('settings-cats')?.addEventListener('click', (e) => {
     // Toggle individual chips
     const chip = e.target.closest('.chip');
-    if (chip) { chip.classList.toggle('active'); return; }
+    if (chip) {
+      chip.classList.toggle('active');
+      refreshSelectionCounts();
+      return;
+    }
 
     // Collapse/expand a whole source
     const sourceHeader = e.target.closest('.cat-source-header');
@@ -729,6 +779,14 @@ function renderSettings() {
       if (body) body.classList.toggle('collapsed');
       if (chevron) chevron.classList.toggle('open');
     }
+  });
+
+  document.getElementById('settings-deselect-all')?.addEventListener('click', () => {
+    const chips = document.querySelectorAll('#settings-cats .chip.active');
+    if (chips.length === 0) return;
+    chips.forEach((c) => c.classList.remove('active'));
+    refreshSelectionCounts();
+    showToast(`Cleared ${chips.length} categories — pick some, then Apply`, 'info');
   });
 
   document.getElementById('settings-apply-cats')?.addEventListener('click', () => {
