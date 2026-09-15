@@ -1,6 +1,6 @@
 // main.js — PaperSpark: TikTok-style research paper feed
 
-import { fetchRecent, ARXIV_CATEGORIES, getCategoryLabel } from './arxiv.js';
+import { fetchRecent, ARXIV_CATEGORIES, ARXIV_GROUPS, getCategoryLabel } from './arxiv.js';
 import {
   generateSummary, getApiKey, setApiKey, removeApiKey, validateApiKey, clearLegacyKey
 } from './deepseek.js';
@@ -537,47 +537,36 @@ function renderSavedList() {
 }
 
 // --- Category Grouping ---
-const FIELD_LABELS = {
-  cs: '💻 Computer Science',
-  econ: '💹 Economics',
-  eess: '📶 Electrical Engineering & Systems',
-  math: '📐 Mathematics',
-  astro: '🔭 Astrophysics',
-  'cond-mat': '🧊 Condensed Matter',
-  'math-ph': '⚛️ Mathematical Physics',
-  nlin: '🌊 Nonlinear Sciences',
-  physics: '🔬 Physics',
-  'q-bio': '🧬 Quantitative Biology',
-  'q-fin': '🏦 Quantitative Finance',
-  stat: '📈 Statistics',
-};
-
+// One collapsible section per arXiv top-level group, in arXiv's own order.
 function renderCategoryGroups() {
   const selected = getCategories();
 
-  // Group categories by field
   const groups = {};
   for (const [key, val] of Object.entries(ARXIV_CATEGORIES)) {
-    const field = val.field;
-    if (!groups[field]) groups[field] = [];
-    groups[field].push({ key, ...val });
+    (groups[val.group] ||= []).push({ key, ...val });
   }
 
-  return Object.entries(groups).map(([field, cats]) => {
+  return Object.keys(ARXIV_GROUPS).map((groupKey) => {
+    const cats = groups[groupKey] || [];
+    if (cats.length === 0) return '';
+
+    const meta = ARXIV_GROUPS[groupKey];
     const groupSelected = cats.filter(c => selected.includes(c.key)).length;
-    const isOpen = groupSelected > 0 || field === 'cs'; // CS open by default
+    // Open whatever the reader is actually subscribed to; otherwise start
+    // collapsed — with 155 categories an all-open list is unusable.
+    const isOpen = groupSelected > 0;
 
     return `
-      <div class="cat-group" data-field="${field}">
-        <button class="cat-group-header" data-toggle-field="${field}">
-          <span>${FIELD_LABELS[field] || field}</span>
-          <span class="cat-group-count">${groupSelected > 0 ? `${groupSelected} selected` : ''}</span>
+      <div class="cat-group" data-field="${groupKey}">
+        <button class="cat-group-header" data-toggle-field="${groupKey}">
+          <span>${meta.emoji} ${esc(meta.label)}</span>
+          <span class="cat-group-count">${groupSelected > 0 ? `${groupSelected} selected` : `${cats.length}`}</span>
           <span class="cat-group-chevron ${isOpen ? 'open' : ''}">▸</span>
         </button>
         <div class="cat-group-body ${isOpen ? '' : 'collapsed'}">
           <div class="category-chips">
             ${cats.map(c => `
-              <button class="chip ${selected.includes(c.key) ? 'active' : ''}" data-cat="${c.key}">${c.emoji} ${c.label}</button>
+              <button class="chip ${selected.includes(c.key) ? 'active' : ''}" data-cat="${c.key}" title="${esc(c.key)}">${c.emoji} ${esc(c.label)}</button>
             `).join('')}
           </div>
         </div>
