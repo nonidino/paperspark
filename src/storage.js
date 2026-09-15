@@ -9,6 +9,38 @@ const KEYS = {
   hasSeenApiPrompt: 'ps_seen_api_prompt',
 };
 
+// Before multiple sources, everything was keyed by a bare arXiv id ("2609.01234")
+// and categories were bare codes ("cs.AI"). Both are now namespaced by source.
+const asPaperId = (value) => (String(value).includes(':') ? String(value) : `arxiv:${value}`);
+
+/** One-time upgrade of anything stored under the old arXiv-only scheme. */
+export function migrateLegacyStorage() {
+  try {
+    const cards = JSON.parse(localStorage.getItem(KEYS.savedCards) || '[]');
+    let changed = false;
+    for (const card of cards) {
+      if (!card.paperId) {
+        card.paperId = asPaperId(card.arxivId || card.id);
+        card.source = card.source || 'arxiv';
+        changed = true;
+      }
+    }
+    if (changed) localStorage.setItem(KEYS.savedCards, JSON.stringify(cards));
+
+    for (const key of [KEYS.likedIds, KEYS.dislikedIds]) {
+      const ids = JSON.parse(localStorage.getItem(key) || '[]');
+      if (ids.some((id) => !String(id).includes(':'))) {
+        localStorage.setItem(key, JSON.stringify(ids.map(asPaperId)));
+      }
+    }
+
+    const cats = JSON.parse(localStorage.getItem(KEYS.categories) || 'null');
+    if (Array.isArray(cats) && cats.some((c) => !String(c).includes(':'))) {
+      localStorage.setItem(KEYS.categories, JSON.stringify(cats.map(asPaperId)));
+    }
+  } catch { /* corrupt storage shouldn't stop the app booting */ }
+}
+
 // --- Saved Cards ---
 export function getSavedCards() {
   try { return JSON.parse(localStorage.getItem(KEYS.savedCards) || '[]'); }
@@ -16,38 +48,39 @@ export function getSavedCards() {
 }
 
 export function saveCard(data) {
+  const paperId = asPaperId(data.paperId || data.id || data.arxivId);
   const cards = getSavedCards();
-  if (cards.find(c => c.arxivId === data.arxivId)) return;
-  cards.unshift({ ...data, id: crypto.randomUUID(), savedAt: Date.now() });
+  if (cards.some(c => c.paperId === paperId)) return;
+  cards.unshift({ ...data, paperId, savedAt: Date.now() });
   localStorage.setItem(KEYS.savedCards, JSON.stringify(cards));
 }
 
-export function removeSavedCard(arxivId) {
-  const cards = getSavedCards().filter(c => c.arxivId !== arxivId);
+export function removeSavedCard(paperId) {
+  const cards = getSavedCards().filter(c => c.paperId !== paperId);
   localStorage.setItem(KEYS.savedCards, JSON.stringify(cards));
 }
 
-export function updateSavedCardNote(arxivId, note) {
+export function updateSavedCardNote(paperId, note) {
   const cards = getSavedCards();
-  const index = cards.findIndex(c => c.arxivId === arxivId);
+  const index = cards.findIndex(c => c.paperId === paperId);
   if (index !== -1) {
     cards[index].note = note;
     localStorage.setItem(KEYS.savedCards, JSON.stringify(cards));
   }
 }
 
-export function isCardSaved(arxivId) {
-  return getSavedCards().some(c => c.arxivId === arxivId);
+export function isCardSaved(paperId) {
+  return getSavedCards().some(c => c.paperId === paperId);
 }
 
 export function toggleSave(data) {
-  if (isCardSaved(data.arxivId)) {
-    removeSavedCard(data.arxivId);
+  const paperId = asPaperId(data.paperId || data.id || data.arxivId);
+  if (isCardSaved(paperId)) {
+    removeSavedCard(paperId);
     return false;
-  } else {
-    saveCard(data);
-    return true;
   }
+  saveCard(data);
+  return true;
 }
 
 // --- Likes / Dislikes ---
@@ -86,9 +119,14 @@ export function toggleDislike(id) {
 }
 
 // --- Categories ---
+const DEFAULT_CATEGORIES = ['arxiv:cs.AI', 'arxiv:cs.LG', 'arxiv:cs.CL'];
+
 export function getCategories() {
-  try { return JSON.parse(localStorage.getItem(KEYS.categories) || '["cs.AI","cs.LG","cs.CL"]'); }
-  catch { return ['cs.AI', 'cs.LG', 'cs.CL']; }
+  try {
+    const stored = JSON.parse(localStorage.getItem(KEYS.categories) || 'null');
+    if (!Array.isArray(stored) || stored.length === 0) return [...DEFAULT_CATEGORIES];
+    return stored.map(asPaperId);
+  } catch { return [...DEFAULT_CATEGORIES]; }
 }
 
 export function setCategories(cats) {

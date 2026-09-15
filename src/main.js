@@ -1,6 +1,7 @@
 // main.js — PaperSpark: TikTok-style research paper feed
 
-import { fetchRecent, ARXIV_CATEGORIES, ARXIV_GROUPS, getCategoryLabel } from './arxiv.js';
+import { fetchRecent } from './feed.js';
+import { loadCatalog, categoryIndex } from './catalog.js';
 import {
   generateSummary, getApiKey, setApiKey, removeApiKey, validateApiKey, clearLegacyKey
 } from './deepseek.js';
@@ -8,7 +9,7 @@ import {
   getSavedCards, toggleSave, isCardSaved, isLiked, isDisliked,
   toggleLike, toggleDislike, getCategories, setCategories,
   getCachedSummary, cacheSummary, hasSeenApiPrompt, markApiPromptSeen,
-  clearAllData, updateSavedCardNote
+  clearAllData, updateSavedCardNote, migrateLegacyStorage
 } from './storage.js';
 import { showToast } from './toast.js';
 
@@ -20,12 +21,19 @@ let feedExhausted = false;  // no more papers available for the chosen categorie
 const BUFFER_SIZE = 7;    // pre-load this many papers
 const ACCENT_COLORS = ['purple', 'green', 'blue', 'orange', 'pink', 'cyan'];
 
+// Category id -> {label, emoji, source, group}, filled from the catalog so
+// cards can name a category from any source, not just arXiv.
+let catIndex = new Map();
+
 // --- Init ---
-function init() {
+async function init() {
   clearLegacyKey();
+  migrateLegacyStorage();
   setupNavigation();
   setupSideActions();
   setupApiKeyModal();
+
+  try { catIndex = await categoryIndex(); } catch { /* cards fall back to the source name */ }
 
   // Show API key prompt if first time
   if (!hasSeenApiPrompt() && !getApiKey()) {
@@ -74,7 +82,7 @@ async function loadPapers(append = false) {
   for (const p of newPapers) {
     papers.push({
       ...p,
-      summary: getCachedSummary(p.arxivId) || null,
+      summary: getCachedSummary(p.id) || null,
       summaryLoading: false,
       summaryError: false,
     });
@@ -83,41 +91,41 @@ async function loadPapers(append = false) {
   // Start generating summaries for new papers (fire & forget)
   if (getApiKey()) {
     for (const p of newPapers) {
-      if (!getCachedSummary(p.arxivId)) {
-        generateAndCacheSummary(p.arxivId);
+      if (!getCachedSummary(p.id)) {
+        generateAndCacheSummary(p.id);
       }
     }
   }
 }
 
-async function generateAndCacheSummary(arxivId) {
-  const idx = papers.findIndex(p => p.arxivId === arxivId);
+async function generateAndCacheSummary(paperId) {
+  const idx = papers.findIndex(p => p.id === paperId);
   if (idx === -1) return;
 
   const paper = papers[idx];
   if (paper.summary || paper.summaryLoading) return;
 
   paper.summaryLoading = true;
-  updateSummaryUI(arxivId);
+  updateSummaryUI(paperId);
 
   try {
     const summary = await generateSummary(paper);
     paper.summary = summary;
     paper.summaryLoading = false;
-    if (summary) cacheSummary(arxivId, summary);
-    updateSummaryUI(arxivId);
+    if (summary) cacheSummary(paperId, summary);
+    updateSummaryUI(paperId);
   } catch (err) {
     paper.summaryLoading = false;
     paper.summaryError = true;
-    updateSummaryUI(arxivId);
+    updateSummaryUI(paperId);
   }
 }
 
-function updateSummaryUI(arxivId) {
-  const el = document.querySelector(`.reel-card[data-arxiv-id="${arxivId}"] .summary-slot`);
+function updateSummaryUI(paperId) {
+  const el = document.querySelector(`.reel-card[data-paper-id="${paperId}"] .summary-slot`);
   if (!el) return;
 
-  const paper = papers.find(p => p.arxivId === arxivId);
+  const paper = papers.find(p => p.id === paperId);
   if (!paper) return;
 
   if (paper.summaryLoading) {
@@ -171,9 +179,25 @@ function renderAllCards() {
   setTimeout(() => updateCurrentIndex(), 100);
 }
 
+/** Source name + emoji for a paper, from the catalog when it's loaded. */
+function sourceMeta(paper) {
+  const entry = catIndex.get(paper.primaryCategory || paper.categories?.[0]);
+  if (entry?.source) return { label: entry.source.label, emoji: entry.source.emoji };
+  return SOURCE_FALLBACK[paper.source] || { label: paper.source || 'Research', emoji: '📄' };
+}
+
+const SOURCE_FALLBACK = {
+  arxiv: { label: 'arXiv', emoji: '📄' },
+  biorxiv: { label: 'bioRxiv', emoji: '🧬' },
+  medrxiv: { label: 'medRxiv', emoji: '🩺' },
+  nber: { label: 'NBER', emoji: '🏦' },
+  techrxiv: { label: 'TechRxiv', emoji: '⚙️' },
+};
+
 function renderReelCard(paper, index) {
   const accent = ACCENT_COLORS[index % ACCENT_COLORS.length];
-  const cat = paper.categories?.[0] ? getCategoryLabel(paper.categories[0]) : 'Research';
+  const cat = catIndex.get(paper.primaryCategory || paper.categories?.[0])?.label || 'Research';
+  const source = sourceMeta(paper);
   const date = formatDate(paper.published);
   const authors = formatAuthors(paper.authors);
 
@@ -201,10 +225,13 @@ function renderReelCard(paper, index) {
   }
 
   return `
-    <div class="reel-card" data-arxiv-id="${paper.arxivId}" data-index="${index}" data-accent="${accent}">
+    <div class="reel-card" data-paper-id="${paper.id}" data-index="${index}" data-accent="${accent}">
       <div class="reel-bg"></div>
       <div class="reel-content">
-        <span class="reel-category">${esc(cat)}</span>
+        <div class="reel-tagline">
+          <span class="reel-source">${source.emoji} ${esc(source.label)}</span>
+          <span class="reel-category">${esc(cat)}</span>
+        </div>
         <h2 class="reel-title">${esc(paper.title)}</h2>
         <div class="reel-meta">
           <span>${esc(authors)}</span>
@@ -234,7 +261,7 @@ function renderReelCard(paper, index) {
         <div class="reel-link-bar">
           <a href="${paper.url}" target="_blank" rel="noopener" class="reel-arxiv-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Read on arXiv
+            Read on ${esc(source.label)}
           </a>
           ${paper.pdfUrl ? `
           <a href="${paper.pdfUrl}" target="_blank" rel="noopener" class="reel-arxiv-link">
@@ -274,7 +301,7 @@ function updateCurrentIndex() {
     // Pre-generate summary for current card if needed
     const paper = papers[currentIndex];
     if (paper && !paper.summary && !paper.summaryLoading && getApiKey()) {
-      generateAndCacheSummary(paper.arxivId);
+      generateAndCacheSummary(paper.id);
     }
   }
 }
@@ -326,7 +353,7 @@ function setupSideActions() {
   document.getElementById('btn-like').addEventListener('click', () => {
     const paper = papers[currentIndex];
     if (!paper) return;
-    const liked = toggleLike(paper.arxivId);
+    const liked = toggleLike(paper.id);
     if (liked) showToast('Liked! ❤️', 'success');
     updateSideButtons();
     animateBtn('btn-like');
@@ -335,7 +362,7 @@ function setupSideActions() {
   document.getElementById('btn-dislike').addEventListener('click', () => {
     const paper = papers[currentIndex];
     if (!paper) return;
-    const disliked = toggleDislike(paper.arxivId);
+    const disliked = toggleDislike(paper.id);
     if (disliked) {
       showToast('Skipped', 'info');
       // Auto-scroll to next
@@ -374,12 +401,12 @@ function updateSideButtons() {
   const dislikeBtn = document.getElementById('btn-dislike');
   const saveBtn = document.getElementById('btn-save');
 
-  likeBtn.classList.toggle('liked', isLiked(paper.arxivId));
-  dislikeBtn.classList.toggle('disliked', isDisliked(paper.arxivId));
-  saveBtn.classList.toggle('saved', isCardSaved(paper.arxivId));
+  likeBtn.classList.toggle('liked', isLiked(paper.id));
+  dislikeBtn.classList.toggle('disliked', isDisliked(paper.id));
+  saveBtn.classList.toggle('saved', isCardSaved(paper.id));
 
-  document.getElementById('like-label').textContent = isLiked(paper.arxivId) ? 'Liked' : 'Like';
-  document.getElementById('save-label').textContent = isCardSaved(paper.arxivId) ? 'Saved' : 'Save';
+  document.getElementById('like-label').textContent = isLiked(paper.id) ? 'Liked' : 'Like';
+  document.getElementById('save-label').textContent = isCardSaved(paper.id) ? 'Saved' : 'Save';
 }
 
 function scrollToNext() {
@@ -485,17 +512,17 @@ function renderSavedList() {
   }
 
   container.innerHTML = cards.map(c => `
-    <div class="saved-item" data-arxiv-id="${c.arxivId}">
+    <div class="saved-item" data-paper-id="${c.paperId}" data-url="${esc(c.url || '')}">
       <div class="saved-item-info">
         <div class="saved-item-title">${esc(c.title)}</div>
         ${c.note ? `<div class="saved-item-note">📝 ${esc(c.note)}</div>` : ''}
         <div class="saved-item-meta">${esc(formatAuthors(c.authors))} · ${formatDate(c.savedAt ? new Date(c.savedAt).toISOString() : c.published)}</div>
       </div>
       <div class="saved-item-actions">
-        <button class="saved-item-edit" data-arxiv-id="${c.arxivId}" data-note="${esc(c.note || '')}" title="Add/Edit Note">
+        <button class="saved-item-edit" data-paper-id="${c.paperId}" data-note="${esc(c.note || '')}" title="Add/Edit Note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
         </button>
-        <button class="saved-item-unsave" data-arxiv-id="${c.arxivId}" title="Remove">
+        <button class="saved-item-unsave" data-paper-id="${c.paperId}" title="Remove">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
@@ -506,8 +533,8 @@ function renderSavedList() {
   container.querySelectorAll('.saved-item-unsave').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = btn.dataset.arxivId;
-      toggleSave({ arxivId: id });
+      const id = btn.dataset.paperId;
+      toggleSave({ paperId: id });
       showToast('Removed', 'info');
       updateSavedBadge();
       renderSavedList();
@@ -517,7 +544,7 @@ function renderSavedList() {
   container.querySelectorAll('.saved-item-edit').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = btn.dataset.arxivId;
+      const id = btn.dataset.paperId;
       const currentNote = btn.dataset.note || '';
       const note = window.prompt("Add a tagline or note for this paper:", currentNote);
       if (note !== null) {
@@ -529,50 +556,80 @@ function renderSavedList() {
 
   container.querySelectorAll('.saved-item').forEach(item => {
     item.addEventListener('click', () => {
-      const id = item.dataset.arxivId;
-      const url = `https://arxiv.org/abs/${id}`;
-      window.open(url, '_blank');
+      const url = item.dataset.url;
+      if (url) window.open(url, '_blank', 'noopener');
     });
   });
 }
 
-// --- Category Grouping ---
-// One collapsible section per arXiv top-level group, in arXiv's own order.
-function renderCategoryGroups() {
-  const selected = getCategories();
+// --- Category Picker ---
+// Nested accordions: source → group → categories, e.g.
+// arXiv → Mathematics → Category Theory. Sources whose taxonomy is flat
+// (bioRxiv, medRxiv, NBER, TechRxiv publish subjects with no parent) skip the
+// middle level rather than gain an invented one.
+let catalogCache = null;
 
-  const groups = {};
-  for (const [key, val] of Object.entries(ARXIV_CATEGORIES)) {
-    (groups[val.group] ||= []).push({ key, ...val });
+async function renderCategoryPicker() {
+  const container = document.getElementById('settings-cats');
+  if (!container) return;
+
+  catalogCache = catalogCache || await loadCatalog();
+  const selected = new Set(getCategories());
+
+  if (!catalogCache.sources.length) {
+    container.innerHTML = '<p class="settings-hint">Category list unavailable — reload to try again.</p>';
+    return;
   }
 
-  return Object.keys(ARXIV_GROUPS).map((groupKey) => {
-    const cats = groups[groupKey] || [];
-    if (cats.length === 0) return '';
+  container.innerHTML = catalogCache.sources.map((source) => {
+    const cats = source.groups.flatMap((g) => g.categories);
+    const nSelected = cats.filter((c) => selected.has(c.id)).length;
+    const open = nSelected > 0;
+    const flat = source.groups.length === 1 && !source.groups[0].label;
 
-    const meta = ARXIV_GROUPS[groupKey];
-    const groupSelected = cats.filter(c => selected.includes(c.key)).length;
-    // Open whatever the reader is actually subscribed to; otherwise start
-    // collapsed — with 155 categories an all-open list is unusable.
-    const isOpen = groupSelected > 0;
+    const body = flat
+      ? renderChips(source.groups[0].categories, selected)
+      : source.groups.map((group) => {
+          const gSelected = group.categories.filter((c) => selected.has(c.id)).length;
+          const gOpen = gSelected > 0;
+          return `
+            <div class="cat-group" data-group="${esc(group.id)}">
+              <button class="cat-group-header" data-toggle="group">
+                <span>${group.emoji || ''} ${esc(group.label)}</span>
+                <span class="cat-group-count">${gSelected > 0 ? `${gSelected} selected` : group.categories.length}</span>
+                <span class="cat-group-chevron ${gOpen ? 'open' : ''}">▸</span>
+              </button>
+              <div class="cat-group-body ${gOpen ? '' : 'collapsed'}">
+                ${renderChips(group.categories, selected)}
+              </div>
+            </div>
+          `;
+        }).join('');
 
     return `
-      <div class="cat-group" data-field="${groupKey}">
-        <button class="cat-group-header" data-toggle-field="${groupKey}">
-          <span>${meta.emoji} ${esc(meta.label)}</span>
-          <span class="cat-group-count">${groupSelected > 0 ? `${groupSelected} selected` : `${cats.length}`}</span>
-          <span class="cat-group-chevron ${isOpen ? 'open' : ''}">▸</span>
+      <div class="cat-source" data-source="${esc(source.id)}">
+        <button class="cat-source-header" data-toggle="source">
+          <span class="cat-source-name">${source.emoji} ${esc(source.label)}</span>
+          <span class="cat-source-meta">${nSelected > 0 ? `${nSelected} selected` : `${cats.length} categories`}</span>
+          <span class="cat-group-chevron ${open ? 'open' : ''}">▸</span>
         </button>
-        <div class="cat-group-body ${isOpen ? '' : 'collapsed'}">
-          <div class="category-chips">
-            ${cats.map(c => `
-              <button class="chip ${selected.includes(c.key) ? 'active' : ''}" data-cat="${c.key}" title="${esc(c.key)}">${c.emoji} ${esc(c.label)}</button>
-            `).join('')}
-          </div>
+        <div class="cat-source-body ${open ? '' : 'collapsed'}">
+          <p class="cat-source-blurb">${esc(source.blurb || '')}</p>
+          ${body}
         </div>
       </div>
     `;
   }).join('');
+}
+
+function renderChips(categories, selected) {
+  return `
+    <div class="category-chips">
+      ${categories.map((c) => `
+        <button class="chip ${selected.has(c.id) ? 'active' : ''}" data-cat="${esc(c.id)}" title="${esc(c.code)} · ${c.count} papers">${c.emoji} ${esc(c.label)}</button>
+      `).join('')}
+    </div>
+  `;
 }
 
 // --- Settings View ---
@@ -598,9 +655,7 @@ function renderSettings() {
 
     <div class="settings-section">
       <div class="settings-section-title">📡 Research Categories</div>
-      <div id="settings-cats">
-        ${renderCategoryGroups()}
-      </div>
+      <div id="settings-cats"><p class="settings-hint">Loading categories…</p></div>
       <button class="btn btn-primary btn-sm w-full mt-8" id="settings-apply-cats">Apply & Reload Feed</button>
     </div>
 
@@ -638,7 +693,7 @@ function renderSettings() {
       // Generate summaries for current papers
       papers.forEach(p => {
         if (!p.summary && !p.summaryLoading) {
-          generateAndCacheSummary(p.arxivId);
+          generateAndCacheSummary(p.id);
         }
       });
     } else {
@@ -648,10 +703,21 @@ function renderSettings() {
     }
   });
 
+  renderCategoryPicker();
+
   document.getElementById('settings-cats')?.addEventListener('click', (e) => {
     // Toggle individual chips
     const chip = e.target.closest('.chip');
     if (chip) { chip.classList.toggle('active'); return; }
+
+    // Collapse/expand a whole source
+    const sourceHeader = e.target.closest('.cat-source-header');
+    if (sourceHeader) {
+      const body = sourceHeader.nextElementSibling;
+      body?.classList.toggle('collapsed');
+      sourceHeader.querySelector('.cat-group-chevron')?.classList.toggle('open');
+      return;
+    }
 
     // Toggle group collapse
     const header = e.target.closest('.cat-group-header');

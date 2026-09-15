@@ -179,6 +179,29 @@ a { color: var(--text-link); text-decoration: none; }
 
 .reel-content::-webkit-scrollbar { display: none; }
 
+/* Source + category line above the title */
+.reel-tagline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.reel-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-secondary, var(--text-primary));
+  border: 1px solid var(--border-color);
+}
+
 /* Category pill */
 .reel-category {
   display: inline-flex;
@@ -192,8 +215,6 @@ a { color: var(--text-link); text-decoration: none; }
   text-transform: uppercase;
   background: rgba(124, 58, 237, 0.15);
   color: var(--text-accent);
-  margin-bottom: 10px;
-  align-self: flex-start;
   backdrop-filter: blur(8px);
 }
 
@@ -772,6 +793,68 @@ a { color: var(--text-link); text-decoration: none; }
 
 .cat-group-body.collapsed {
   display: none;
+}
+
+/* Source level — the outer tier of source > group > category */
+.cat-source {
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg, 12px);
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.cat-source-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 14px;
+  background: var(--bg-surface-raised, var(--bg-surface));
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.cat-source-header:hover { filter: brightness(1.15); }
+
+.cat-source-name { flex: 0 1 auto; }
+
+.cat-source-meta {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent-purple);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.cat-source-body {
+  padding: 4px 8px 10px;
+}
+
+.cat-source-body.collapsed { display: none; }
+
+.cat-source-blurb {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 2px 6px 10px;
+}
+
+/* Nested groups sit inside a source, so soften their frame */
+.cat-source-body .cat-group {
+  border-color: transparent;
+  background: transparent;
+}
+.cat-source-body .cat-group-header { background: transparent; }
+.cat-source-body .cat-group-header:hover { background: var(--bg-surface-raised); }
+
+.settings-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 10px 4px;
 }
 
 /* ====================================

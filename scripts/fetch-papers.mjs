@@ -1,246 +1,148 @@
-// fetch-papers.mjs — build-time arXiv prefetch.
+// fetch-papers.mjs — build-time prefetch for every source.
 //
-// arXiv sends no CORS headers, so the browser cannot call it directly, and
-// every free public CORS proxy is now dead, paywalled, or rate-limited. So we
-// fetch here (in CI) and ship the result as static JSON the app loads
-// same-origin — no proxy, no CORS, no rate limits at runtime.
+// None of these sites send CORS headers (and several refuse server-side
+// requests entirely), so the browser can't call them directly. We fetch here,
+// in CI, and ship the result as static JSON the app loads same-origin: no
+// proxies, no CORS, no rate limits at runtime.
 //
-// Source is rss.arxiv.org, not export.arxiv.org/api: the export API 429s every
-// request from GitHub's runners (they share IPs with everyone else polling it),
-// while the RSS endpoint is CDN-fronted, meant to be polled, and answers in
-// about a second. Categories are requested in "a+b+c" batches, and each item
-// carries its own <category> tags, so one response fills many buckets.
+// Output:
+//   data/<source>/<category>.json   papers for one category
+//   data/catalog.json               the source -> group -> category tree
 
 import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { ARXIV_CATEGORIES } from '../src/arxiv.js';
+import arxiv from './sources/arxiv.mjs';
+import { biorxiv, medrxiv } from './sources/rxiv.mjs';
+import nber from './sources/nber.mjs';
+import techrxiv from './sources/techrxiv.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_DIR = join(ROOT, 'data');
+const PER_CATEGORY = 30;
 
-const RSS_BASE = 'https://rss.arxiv.org/rss/';
-const PER_CATEGORY = 30;   // papers stored per category
-const CHUNK_SIZE = 10;     // categories per request
-const DELAY_MS = 2000;     // polite gap between requests
-const MAX_ATTEMPTS = 3;
-const USER_AGENT = 'PaperSpark/1.0 (+https://github.com/nonidino/paperspark)';
+const SOURCES = [arxiv, biorxiv, medrxiv, nber, techrxiv];
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const log = (msg) => console.log(msg);
 
-// --- Minimal RSS parsing (no DOMParser in Node, no dependencies) ---
+/** Strip the "source:" prefix to get the on-disk filename. */
+const codeOf = (categoryId) => categoryId.slice(categoryId.indexOf(':') + 1);
 
-function decodeEntities(s) {
-  return s
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'")
-    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
-    .replace(/&amp;/g, '&');
-}
+async function runSource(source) {
+  log(`\n=== ${source.label} ===`);
+  const started = Date.now();
 
-const clean = (s) => decodeEntities(s).replace(/\s+/g, ' ').trim();
-
-// Built with string concatenation rather than template literals so the
-// backslashes in the character classes survive verbatim.
-function tagRe(tag, flags) {
-  return new RegExp('<' + tag + '(?:\\s[^>]*)?>([\\s\\S]*?)</' + tag + '>', flags);
-}
-
-function tagText(xml, tag) {
-  const m = xml.match(tagRe(tag));
-  return m ? clean(m[1]) : '';
-}
-
-function allTagText(xml, tag) {
-  const out = [];
-  const re = tagRe(tag, 'g');
-  let m;
-  while ((m = re.exec(xml))) out.push(clean(m[1]));
-  return out;
-}
-
-function parseRss(xml) {
-  const papers = [];
-  const itemRe = tagRe('item', 'g');
-  let m;
-
-  while ((m = itemRe.exec(xml))) {
-    const item = m[1];
-
-    // guid looks like "oai:arXiv.org:2609.11977v1"
-    const guid = tagText(item, 'guid');
-    const link = tagText(item, 'link');
-    const arxivId = (guid.replace(/^oai:arXiv\.org:/, '')
-      || link.replace(/^https?:\/\/arxiv\.org\/abs\//, ''))
-      .replace(/v\d+$/, '');
-
-    const title = tagText(item, 'title');
-
-    // description is "arXiv:ID Announce Type: new \nAbstract: <text>"
-    const abstract = tagText(item, 'description')
-      .replace(/^arXiv:\S+\s*/i, '')
-      .replace(/^Announce Type:\s*\S+\s*/i, '')
-      .replace(/^Abstract:\s*/i, '')
-      .trim();
-
-    if (!arxivId || !title || !abstract) continue;
-
-    const creator = tagText(item, 'dc:creator');
-    const authors = creator ? creator.split(/\s*,\s*/).filter(Boolean) : [];
-
-    const pubDate = tagText(item, 'pubDate');
-    const published = pubDate && !Number.isNaN(Date.parse(pubDate))
-      ? new Date(pubDate).toISOString()
-      : new Date().toISOString();
-
-    papers.push({
-      arxivId,
-      title,
-      authors,
-      abstract,
-      categories: allTagText(item, 'category'),
-      published,
-      updated: published,
-      announceType: tagText(item, 'arxiv:announce_type') || 'new',
-      pdfUrl: 'https://arxiv.org/pdf/' + arxivId,
-      url: link || 'https://arxiv.org/abs/' + arxivId,
-    });
+  let papers = [];
+  let failed = false;
+  try {
+    papers = await source.fetchAll({ log });
+  } catch (err) {
+    log(`  SOURCE FAILED (${err.message}) — falling back to cached data`);
+    failed = true;
   }
 
-  return papers;
-}
+  // Sources that discover their taxonomy while fetching hand it back on _discovered.
+  const groups = source.taxonomy(source._discovered || []);
 
-// --- Fetching ---
-
-async function fetchChunk(cats) {
-  const url = RSS_BASE + cats.join('+');
-
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    try {
-      const resp = await fetch(url, {
-        headers: { 'User-Agent': USER_AGENT },
-        signal: AbortSignal.timeout(60000),
-      });
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      return parseRss(await resp.text());
-    } catch (err) {
-      if (attempt === MAX_ATTEMPTS) throw err;
-      const backoff = DELAY_MS * Math.pow(3, attempt); // 6s, then 18s
-      console.log('    retry after ' + err.message + ' (waiting ' + backoff / 1000 + 's)');
-      await sleep(backoff);
-    }
+  // Bucket papers into the categories they claim.
+  const buckets = new Map();
+  for (const group of groups) {
+    for (const cat of group.categories) buckets.set(cat.id, []);
   }
-}
-
-async function fetchAll(cats) {
-  const buckets = new Map(cats.map((c) => [c, []]));
-  const known = new Set(cats);
-  const seen = new Set();
-  const collected = [];
-
-  const chunks = [];
-  for (let i = 0; i < cats.length; i += CHUNK_SIZE) {
-    chunks.push(cats.slice(i, i + CHUNK_SIZE));
-  }
-
-  for (const [i, chunk] of chunks.entries()) {
-    process.stdout.write('[' + (i + 1) + '/' + chunks.length + '] ' + chunk.join('+') + ' ... ');
-    try {
-      const papers = await fetchChunk(chunk);
-      console.log(papers.length + ' items');
-      for (const paper of papers) {
-        if (seen.has(paper.arxivId)) continue;
-        seen.add(paper.arxivId);
-        collected.push(paper);
-      }
-    } catch (err) {
-      // Keep going: other chunks still contribute, and unfilled categories
-      // fall back to their cached copy below.
-      console.log('FAILED (' + err.message + ')');
-    }
-
-    if (i < chunks.length - 1) await sleep(DELAY_MS);
-  }
-
-  // Newly announced papers first, revisions of older ones last, so a category
-  // fills up with genuinely new work before falling back to replacements.
-  const rank = (p) => (p.announceType === 'replace' ? 1 : 0);
-  collected.sort((a, b) => rank(a) - rank(b) || new Date(b.published) - new Date(a.published));
-
-  for (const paper of collected) {
-    for (const cat of paper.categories) {
-      if (!known.has(cat)) continue;
-      const bucket = buckets.get(cat);
-      if (bucket.length < PER_CATEGORY) {
-        const { announceType, ...rest } = paper;
-        bucket.push(rest);
-      }
+  for (const paper of papers) {
+    for (const catId of paper.categories) {
+      const bucket = buckets.get(catId);
+      if (bucket && bucket.length < PER_CATEGORY) bucket.push(stripInternal(paper));
     }
   }
 
-  console.log('Collected ' + collected.length + ' unique papers.');
-  return buckets;
-}
+  // Write one file per category, keeping the previous run's papers for any
+  // category that is quiet today. Stale papers beat an empty feed.
+  const dir = join(DATA_DIR, source.id);
+  await mkdir(dir, { recursive: true });
 
-async function main() {
-  await mkdir(DATA_DIR, { recursive: true });
-
-  const cats = Object.keys(ARXIV_CATEGORIES);
-  const index = {
-    generatedAt: new Date().toISOString(),
-    perCategory: PER_CATEGORY,
-    categories: {},
-  };
-
-  let ok = 0;
+  let written = 0;
   let reused = 0;
-  let failed = 0;
+  const counts = {};
 
-  const buckets = await fetchAll(cats);
+  for (const [catId, list] of buckets) {
+    const file = join(dir, codeOf(catId) + '.json');
 
-  for (const cat of cats) {
-    const file = join(DATA_DIR, cat + '.json');
-    const papers = buckets.get(cat) || [];
-
-    if (papers.length > 0) {
+    if (list.length > 0) {
       await writeFile(file, JSON.stringify({
-        category: cat,
+        category: catId,
         fetchedAt: new Date().toISOString(),
-        papers,
+        papers: list,
       }));
-      index.categories[cat] = papers.length;
-      ok++;
+      counts[catId] = list.length;
+      written++;
       continue;
     }
 
-    // Nothing announced for this category today — keep the previous run's
-    // papers rather than dropping it. Stale papers beat an empty feed.
     if (existsSync(file)) {
       try {
         const prev = JSON.parse(await readFile(file, 'utf8'));
         const n = prev.papers ? prev.papers.length : 0;
         if (n > 0) {
-          index.categories[cat] = n;
+          counts[catId] = n;
           reused++;
-          continue;
         }
-      } catch { /* fall through to the failure path */ }
+      } catch { /* treat as empty */ }
     }
-
-    failed++;
   }
 
-  await writeFile(join(DATA_DIR, 'index.json'), JSON.stringify(index, null, 2));
-  console.log('\nDone: ' + ok + ' fetched, ' + reused + ' kept from cache, ' + failed + ' empty.');
+  const secs = ((Date.now() - started) / 1000).toFixed(0);
+  log(`  ${papers.length} papers -> ${written} categories written, ${reused} kept from cache (${secs}s)`);
 
-  // Only fail the build if we produced essentially nothing.
-  if (ok === 0 && reused === 0) {
-    console.error('No category data at all — failing so a broken build is not published.');
+  return {
+    id: source.id,
+    label: source.label,
+    emoji: source.emoji,
+    blurb: source.blurb,
+    failed,
+    total: papers.length,
+    groups: groups
+      .map((g) => ({
+        ...g,
+        categories: g.categories
+          .map((c) => ({ ...c, count: counts[c.id] || 0 }))
+          .filter((c) => c.count > 0),
+      }))
+      .filter((g) => g.categories.length > 0),
+  };
+}
+
+/** Fields used only while fetching shouldn't reach the browser. */
+function stripInternal(paper) {
+  const { announceType, siteBase, ...rest } = paper;
+  return rest;
+}
+
+async function main() {
+  await mkdir(DATA_DIR, { recursive: true });
+
+  const catalogSources = [];
+  for (const source of SOURCES) {
+    catalogSources.push(await runSource(source));
+  }
+
+  const usable = catalogSources.filter((s) => s.groups.length > 0);
+
+  await writeFile(join(DATA_DIR, 'catalog.json'), JSON.stringify({
+    generatedAt: new Date().toISOString(),
+    perCategory: PER_CATEGORY,
+    sources: usable,
+  }, null, 1));
+
+  const totalCats = usable.reduce(
+    (sum, s) => sum + s.groups.reduce((n, g) => n + g.categories.length, 0), 0
+  );
+  log(`\nCatalog: ${usable.length}/${SOURCES.length} sources, ${totalCats} categories with papers.`);
+
+  if (usable.length === 0) {
+    console.error('No data from any source — failing so a broken build is not published.');
     process.exit(1);
   }
 }
