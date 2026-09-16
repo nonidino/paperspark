@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-16T00:27:56.151Z",
+ "generatedAt": "2026-09-16T00:59:13.773Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1124,7 +1124,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 270,
+   "total": 271,
    "groups": [
     {
      "id": "_all",
