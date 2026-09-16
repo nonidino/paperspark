@@ -1,27 +1,34 @@
-name: Deploy to GitHub Pages
+name: Refresh papers
+
+# Pages serves this repo with the legacy branch builder (Settings > Pages =
+# "Deploy from a branch", master / root), so the site is whatever is committed.
+# That means the paper snapshots have to be committed too — this workflow
+# regenerates them and pushes them back, and GitHub publishes the result.
+#
+# There is no actions/deploy-pages step here on purpose: it only works when
+# Pages is set to "GitHub Actions", and against a branch-built site it hangs in
+# "waiting" forever while the branch builder quietly serves stale content.
 
 on:
   push:
     branches: [ master ]
+    # Don't re-trigger on this workflow's own data commits.
+    paths-ignore:
+      - 'data/**'
   schedule:
     # Refresh the paper snapshot twice a day (07:00 and 19:00 UTC).
     - cron: '0 7,19 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: "pages"
+  group: refresh-papers
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  refresh:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,34 +39,19 @@ jobs:
         with:
           node-version: '22'
 
-      # Keeps the last good snapshot around, so a category that fails to fetch
-      # falls back to its previous papers instead of disappearing.
-      - name: Restore previous paper data
-        uses: actions/cache/restore@v4
-        with:
-          path: data
-          key: arxiv-data-${{ github.run_id }}
-          restore-keys: |
-            arxiv-data-
-
-      - name: Fetch papers from arXiv
+      # The committed data doubles as the cache: a category that fails to fetch
+      # keeps the papers already in the working tree.
+      - name: Fetch papers
         run: node scripts/fetch-papers.mjs
 
-      - name: Save paper data
-        uses: actions/cache/save@v4
-        if: always()
-        with:
-          path: data
-          key: arxiv-data-${{ github.run_id }}
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data
+          if git diff --cached --quiet; then
+            echo "No paper changes to commit."
+            exit 0
+          fi
+          git commit -m "Refresh paper snapshots [skip ci]"
+          git push

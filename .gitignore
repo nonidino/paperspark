@@ -2,7 +2,3 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
-
-# Paper snapshots are generated at build time and shipped with the Pages
-# artifact, so they are never committed.
-data/

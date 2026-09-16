@@ -1,0 +1,2035 @@
+{
+ "generatedAt": "2026-09-16T00:27:56.151Z",
+ "perCategory": 30,
+ "sources": [
+  {
+   "id": "arxiv",
+   "label": "arXiv",
+   "emoji": "📄",
+   "blurb": "Physics, maths, CS, economics and more",
+   "failed": false,
+   "total": 4348,
+   "groups": [
+    {
+     "id": "cs",
+     "label": "Computer Science",
+     "emoji": "💻",
+     "categories": [
+      {
+       "id": "arxiv:cs.AI",
+       "label": "Artificial Intelligence",
+       "emoji": "🤖",
+       "code": "cs.AI",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.AR",
+       "label": "Hardware Architecture",
+       "emoji": "🔧",
+       "code": "cs.AR",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.CC",
+       "label": "Computational Complexity",
+       "emoji": "🧩",
+       "code": "cs.CC",
+       "count": 18
+      },
+      {
+       "id": "arxiv:cs.CE",
+       "label": "Computational Engineering, Finance, and Science",
+       "emoji": "⚙️",
+       "code": "cs.CE",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.CG",
+       "label": "Computational Geometry",
+       "emoji": "📐",
+       "code": "cs.CG",
+       "count": 15
+      },
+      {
+       "id": "arxiv:cs.CL",
+       "label": "Computation and Language",
+       "emoji": "💬",
+       "code": "cs.CL",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.CR",
+       "label": "Cryptography and Security",
+       "emoji": "🔐",
+       "code": "cs.CR",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.CV",
+       "label": "Computer Vision and Pattern Recognition",
+       "emoji": "👁️",
+       "code": "cs.CV",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.CY",
+       "label": "Computers and Society",
+       "emoji": "🏛️",
+       "code": "cs.CY",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.DB",
+       "label": "Databases",
+       "emoji": "🗄️",
+       "code": "cs.DB",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.DC",
+       "label": "Distributed, Parallel, and Cluster Computing",
+       "emoji": "🌐",
+       "code": "cs.DC",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.DL",
+       "label": "Digital Libraries",
+       "emoji": "📚",
+       "code": "cs.DL",
+       "count": 10
+      },
+      {
+       "id": "arxiv:cs.DM",
+       "label": "Discrete Mathematics",
+       "emoji": "🔢",
+       "code": "cs.DM",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.DS",
+       "label": "Data Structures and Algorithms",
+       "emoji": "📊",
+       "code": "cs.DS",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.ET",
+       "label": "Emerging Technologies",
+       "emoji": "🚀",
+       "code": "cs.ET",
+       "count": 26
+      },
+      {
+       "id": "arxiv:cs.FL",
+       "label": "Formal Languages and Automata Theory",
+       "emoji": "🔤",
+       "code": "cs.FL",
+       "count": 7
+      },
+      {
+       "id": "arxiv:cs.GR",
+       "label": "Graphics",
+       "emoji": "🎨",
+       "code": "cs.GR",
+       "count": 24
+      },
+      {
+       "id": "arxiv:cs.GT",
+       "label": "Computer Science and Game Theory",
+       "emoji": "🎯",
+       "code": "cs.GT",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.HC",
+       "label": "Human-Computer Interaction",
+       "emoji": "🖱️",
+       "code": "cs.HC",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.IR",
+       "label": "Information Retrieval",
+       "emoji": "🔍",
+       "code": "cs.IR",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.IT",
+       "label": "Information Theory",
+       "emoji": "📡",
+       "code": "cs.IT",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.LG",
+       "label": "Machine Learning",
+       "emoji": "🧠",
+       "code": "cs.LG",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.LO",
+       "label": "Logic in Computer Science",
+       "emoji": "🔬",
+       "code": "cs.LO",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.MA",
+       "label": "Multiagent Systems",
+       "emoji": "👥",
+       "code": "cs.MA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.MM",
+       "label": "Multimedia",
+       "emoji": "🎬",
+       "code": "cs.MM",
+       "count": 11
+      },
+      {
+       "id": "arxiv:cs.MS",
+       "label": "Mathematical Software",
+       "emoji": "🧮",
+       "code": "cs.MS",
+       "count": 6
+      },
+      {
+       "id": "arxiv:cs.NA",
+       "label": "Numerical Analysis",
+       "emoji": "🔣",
+       "code": "cs.NA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.NE",
+       "label": "Neural and Evolutionary Computing",
+       "emoji": "⚡",
+       "code": "cs.NE",
+       "count": 20
+      },
+      {
+       "id": "arxiv:cs.NI",
+       "label": "Networking and Internet Architecture",
+       "emoji": "🌍",
+       "code": "cs.NI",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.OH",
+       "label": "Other Computer Science",
+       "emoji": "📎",
+       "code": "cs.OH",
+       "count": 1
+      },
+      {
+       "id": "arxiv:cs.OS",
+       "label": "Operating Systems",
+       "emoji": "🖥️",
+       "code": "cs.OS",
+       "count": 6
+      },
+      {
+       "id": "arxiv:cs.PF",
+       "label": "Performance",
+       "emoji": "⏱️",
+       "code": "cs.PF",
+       "count": 15
+      },
+      {
+       "id": "arxiv:cs.PL",
+       "label": "Programming Languages",
+       "emoji": "💻",
+       "code": "cs.PL",
+       "count": 15
+      },
+      {
+       "id": "arxiv:cs.RO",
+       "label": "Robotics",
+       "emoji": "🦾",
+       "code": "cs.RO",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.SC",
+       "label": "Symbolic Computation",
+       "emoji": "∑",
+       "code": "cs.SC",
+       "count": 8
+      },
+      {
+       "id": "arxiv:cs.SD",
+       "label": "Sound",
+       "emoji": "🔊",
+       "code": "cs.SD",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.SE",
+       "label": "Software Engineering",
+       "emoji": "🛠️",
+       "code": "cs.SE",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cs.SI",
+       "label": "Social and Information Networks",
+       "emoji": "🕸️",
+       "code": "cs.SI",
+       "count": 20
+      },
+      {
+       "id": "arxiv:cs.SY",
+       "label": "Systems and Control",
+       "emoji": "🎛️",
+       "code": "cs.SY",
+       "count": 30
+      }
+     ]
+    },
+    {
+     "id": "econ",
+     "label": "Economics",
+     "emoji": "💹",
+     "categories": [
+      {
+       "id": "arxiv:econ.EM",
+       "label": "Econometrics",
+       "emoji": "💹",
+       "code": "econ.EM",
+       "count": 16
+      },
+      {
+       "id": "arxiv:econ.GN",
+       "label": "General Economics",
+       "emoji": "💹",
+       "code": "econ.GN",
+       "count": 16
+      },
+      {
+       "id": "arxiv:econ.TH",
+       "label": "Theoretical Economics",
+       "emoji": "💹",
+       "code": "econ.TH",
+       "count": 23
+      }
+     ]
+    },
+    {
+     "id": "eess",
+     "label": "Electrical Engineering and Systems Science",
+     "emoji": "📶",
+     "categories": [
+      {
+       "id": "arxiv:eess.AS",
+       "label": "Audio and Speech Processing",
+       "emoji": "🎙️",
+       "code": "eess.AS",
+       "count": 30
+      },
+      {
+       "id": "arxiv:eess.IV",
+       "label": "Image and Video Processing",
+       "emoji": "🖼️",
+       "code": "eess.IV",
+       "count": 19
+      },
+      {
+       "id": "arxiv:eess.SP",
+       "label": "Signal Processing",
+       "emoji": "📶",
+       "code": "eess.SP",
+       "count": 30
+      },
+      {
+       "id": "arxiv:eess.SY",
+       "label": "Systems and Control",
+       "emoji": "🎛️",
+       "code": "eess.SY",
+       "count": 30
+      }
+     ]
+    },
+    {
+     "id": "math",
+     "label": "Mathematics",
+     "emoji": "📐",
+     "categories": [
+      {
+       "id": "arxiv:math.AC",
+       "label": "Commutative Algebra",
+       "emoji": "📐",
+       "code": "math.AC",
+       "count": 27
+      },
+      {
+       "id": "arxiv:math.AG",
+       "label": "Algebraic Geometry",
+       "emoji": "📐",
+       "code": "math.AG",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.AP",
+       "label": "Analysis of PDEs",
+       "emoji": "∂",
+       "code": "math.AP",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.AT",
+       "label": "Algebraic Topology",
+       "emoji": "📐",
+       "code": "math.AT",
+       "count": 24
+      },
+      {
+       "id": "arxiv:math.CA",
+       "label": "Classical Analysis and ODEs",
+       "emoji": "∫",
+       "code": "math.CA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.CO",
+       "label": "Combinatorics",
+       "emoji": "📐",
+       "code": "math.CO",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.CT",
+       "label": "Category Theory",
+       "emoji": "📐",
+       "code": "math.CT",
+       "count": 19
+      },
+      {
+       "id": "arxiv:math.CV",
+       "label": "Complex Variables",
+       "emoji": "📐",
+       "code": "math.CV",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.DG",
+       "label": "Differential Geometry",
+       "emoji": "📐",
+       "code": "math.DG",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.DS",
+       "label": "Dynamical Systems",
+       "emoji": "📐",
+       "code": "math.DS",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.FA",
+       "label": "Functional Analysis",
+       "emoji": "📐",
+       "code": "math.FA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.GM",
+       "label": "General Mathematics",
+       "emoji": "📐",
+       "code": "math.GM",
+       "count": 6
+      },
+      {
+       "id": "arxiv:math.GN",
+       "label": "General Topology",
+       "emoji": "📐",
+       "code": "math.GN",
+       "count": 11
+      },
+      {
+       "id": "arxiv:math.GR",
+       "label": "Group Theory",
+       "emoji": "📐",
+       "code": "math.GR",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.GT",
+       "label": "Geometric Topology",
+       "emoji": "📐",
+       "code": "math.GT",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.HO",
+       "label": "History and Overview",
+       "emoji": "📐",
+       "code": "math.HO",
+       "count": 3
+      },
+      {
+       "id": "arxiv:math.IT",
+       "label": "Information Theory",
+       "emoji": "📡",
+       "code": "math.IT",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.KT",
+       "label": "K-Theory and Homology",
+       "emoji": "📐",
+       "code": "math.KT",
+       "count": 5
+      },
+      {
+       "id": "arxiv:math.LO",
+       "label": "Logic",
+       "emoji": "📐",
+       "code": "math.LO",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.MG",
+       "label": "Metric Geometry",
+       "emoji": "📐",
+       "code": "math.MG",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.MP",
+       "label": "Mathematical Physics",
+       "emoji": "⚛️",
+       "code": "math.MP",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.NA",
+       "label": "Numerical Analysis",
+       "emoji": "📐",
+       "code": "math.NA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.NT",
+       "label": "Number Theory",
+       "emoji": "📐",
+       "code": "math.NT",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.OA",
+       "label": "Operator Algebras",
+       "emoji": "📐",
+       "code": "math.OA",
+       "count": 27
+      },
+      {
+       "id": "arxiv:math.OC",
+       "label": "Optimization and Control",
+       "emoji": "📐",
+       "code": "math.OC",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.PR",
+       "label": "Probability",
+       "emoji": "🎲",
+       "code": "math.PR",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.QA",
+       "label": "Quantum Algebra",
+       "emoji": "📐",
+       "code": "math.QA",
+       "count": 22
+      },
+      {
+       "id": "arxiv:math.RA",
+       "label": "Rings and Algebras",
+       "emoji": "📐",
+       "code": "math.RA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.RT",
+       "label": "Representation Theory",
+       "emoji": "📐",
+       "code": "math.RT",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math.SG",
+       "label": "Symplectic Geometry",
+       "emoji": "📐",
+       "code": "math.SG",
+       "count": 3
+      },
+      {
+       "id": "arxiv:math.SP",
+       "label": "Spectral Theory",
+       "emoji": "📐",
+       "code": "math.SP",
+       "count": 20
+      },
+      {
+       "id": "arxiv:math.ST",
+       "label": "Statistics Theory",
+       "emoji": "📐",
+       "code": "math.ST",
+       "count": 30
+      }
+     ]
+    },
+    {
+     "id": "physics",
+     "label": "Physics",
+     "emoji": "🔬",
+     "categories": [
+      {
+       "id": "arxiv:astro-ph.CO",
+       "label": "Cosmology and Nongalactic Astrophysics",
+       "emoji": "🌌",
+       "code": "astro-ph.CO",
+       "count": 30
+      },
+      {
+       "id": "arxiv:astro-ph.EP",
+       "label": "Earth and Planetary Astrophysics",
+       "emoji": "🪐",
+       "code": "astro-ph.EP",
+       "count": 20
+      },
+      {
+       "id": "arxiv:astro-ph.GA",
+       "label": "Astrophysics of Galaxies",
+       "emoji": "🌀",
+       "code": "astro-ph.GA",
+       "count": 30
+      },
+      {
+       "id": "arxiv:astro-ph.HE",
+       "label": "High Energy Astrophysical Phenomena",
+       "emoji": "💥",
+       "code": "astro-ph.HE",
+       "count": 30
+      },
+      {
+       "id": "arxiv:astro-ph.IM",
+       "label": "Instrumentation and Methods for Astrophysics",
+       "emoji": "🔭",
+       "code": "astro-ph.IM",
+       "count": 30
+      },
+      {
+       "id": "arxiv:astro-ph.SR",
+       "label": "Solar and Stellar Astrophysics",
+       "emoji": "☀️",
+       "code": "astro-ph.SR",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cond-mat.dis-nn",
+       "label": "Disordered Systems and Neural Networks",
+       "emoji": "🌀",
+       "code": "cond-mat.dis-nn",
+       "count": 26
+      },
+      {
+       "id": "arxiv:cond-mat.mes-hall",
+       "label": "Mesoscale and Nanoscale Physics",
+       "emoji": "🔬",
+       "code": "cond-mat.mes-hall",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cond-mat.mtrl-sci",
+       "label": "Materials Science",
+       "emoji": "🧱",
+       "code": "cond-mat.mtrl-sci",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cond-mat.other",
+       "label": "Other Condensed Matter",
+       "emoji": "🧊",
+       "code": "cond-mat.other",
+       "count": 9
+      },
+      {
+       "id": "arxiv:cond-mat.quant-gas",
+       "label": "Quantum Gases",
+       "emoji": "❄️",
+       "code": "cond-mat.quant-gas",
+       "count": 24
+      },
+      {
+       "id": "arxiv:cond-mat.soft",
+       "label": "Soft Condensed Matter",
+       "emoji": "🫧",
+       "code": "cond-mat.soft",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cond-mat.stat-mech",
+       "label": "Statistical Mechanics",
+       "emoji": "🌡️",
+       "code": "cond-mat.stat-mech",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cond-mat.str-el",
+       "label": "Strongly Correlated Electrons",
+       "emoji": "⚡",
+       "code": "cond-mat.str-el",
+       "count": 30
+      },
+      {
+       "id": "arxiv:cond-mat.supr-con",
+       "label": "Superconductivity",
+       "emoji": "🧲",
+       "code": "cond-mat.supr-con",
+       "count": 24
+      },
+      {
+       "id": "arxiv:gr-qc",
+       "label": "General Relativity and Quantum Cosmology",
+       "emoji": "🌀",
+       "code": "gr-qc",
+       "count": 30
+      },
+      {
+       "id": "arxiv:hep-ex",
+       "label": "High Energy Physics - Experiment",
+       "emoji": "⚛️",
+       "code": "hep-ex",
+       "count": 30
+      },
+      {
+       "id": "arxiv:hep-lat",
+       "label": "High Energy Physics - Lattice",
+       "emoji": "⚛️",
+       "code": "hep-lat",
+       "count": 13
+      },
+      {
+       "id": "arxiv:hep-ph",
+       "label": "High Energy Physics - Phenomenology",
+       "emoji": "⚛️",
+       "code": "hep-ph",
+       "count": 30
+      },
+      {
+       "id": "arxiv:hep-th",
+       "label": "High Energy Physics - Theory",
+       "emoji": "⚛️",
+       "code": "hep-th",
+       "count": 30
+      },
+      {
+       "id": "arxiv:math-ph",
+       "label": "Mathematical Physics",
+       "emoji": "⚛️",
+       "code": "math-ph",
+       "count": 30
+      },
+      {
+       "id": "arxiv:nlin.AO",
+       "label": "Adaptation and Self-Organizing Systems",
+       "emoji": "🦠",
+       "code": "nlin.AO",
+       "count": 8
+      },
+      {
+       "id": "arxiv:nlin.CD",
+       "label": "Chaotic Dynamics",
+       "emoji": "🌊",
+       "code": "nlin.CD",
+       "count": 13
+      },
+      {
+       "id": "arxiv:nlin.PS",
+       "label": "Pattern Formation and Solitons",
+       "emoji": "🌈",
+       "code": "nlin.PS",
+       "count": 9
+      },
+      {
+       "id": "arxiv:nlin.SI",
+       "label": "Exactly Solvable and Integrable Systems",
+       "emoji": "♾️",
+       "code": "nlin.SI",
+       "count": 14
+      },
+      {
+       "id": "arxiv:nucl-ex",
+       "label": "Nuclear Experiment",
+       "emoji": "☢️",
+       "code": "nucl-ex",
+       "count": 21
+      },
+      {
+       "id": "arxiv:nucl-th",
+       "label": "Nuclear Theory",
+       "emoji": "☢️",
+       "code": "nucl-th",
+       "count": 30
+      },
+      {
+       "id": "arxiv:physics.acc-ph",
+       "label": "Accelerator Physics",
+       "emoji": "🔬",
+       "code": "physics.acc-ph",
+       "count": 3
+      },
+      {
+       "id": "arxiv:physics.ao-ph",
+       "label": "Atmospheric and Oceanic Physics",
+       "emoji": "🌊",
+       "code": "physics.ao-ph",
+       "count": 20
+      },
+      {
+       "id": "arxiv:physics.app-ph",
+       "label": "Applied Physics",
+       "emoji": "🔌",
+       "code": "physics.app-ph",
+       "count": 16
+      },
+      {
+       "id": "arxiv:physics.atom-ph",
+       "label": "Atomic Physics",
+       "emoji": "⚛️",
+       "code": "physics.atom-ph",
+       "count": 20
+      },
+      {
+       "id": "arxiv:physics.bio-ph",
+       "label": "Biological Physics",
+       "emoji": "🧬",
+       "code": "physics.bio-ph",
+       "count": 6
+      },
+      {
+       "id": "arxiv:physics.chem-ph",
+       "label": "Chemical Physics",
+       "emoji": "🔬",
+       "code": "physics.chem-ph",
+       "count": 16
+      },
+      {
+       "id": "arxiv:physics.class-ph",
+       "label": "Classical Physics",
+       "emoji": "🔬",
+       "code": "physics.class-ph",
+       "count": 10
+      },
+      {
+       "id": "arxiv:physics.comp-ph",
+       "label": "Computational Physics",
+       "emoji": "🔬",
+       "code": "physics.comp-ph",
+       "count": 30
+      },
+      {
+       "id": "arxiv:physics.data-an",
+       "label": "Data Analysis, Statistics and Probability",
+       "emoji": "🔬",
+       "code": "physics.data-an",
+       "count": 10
+      },
+      {
+       "id": "arxiv:physics.ed-ph",
+       "label": "Physics Education",
+       "emoji": "🔬",
+       "code": "physics.ed-ph",
+       "count": 2
+      },
+      {
+       "id": "arxiv:physics.flu-dyn",
+       "label": "Fluid Dynamics",
+       "emoji": "💧",
+       "code": "physics.flu-dyn",
+       "count": 30
+      },
+      {
+       "id": "arxiv:physics.gen-ph",
+       "label": "General Physics",
+       "emoji": "🔬",
+       "code": "physics.gen-ph",
+       "count": 6
+      },
+      {
+       "id": "arxiv:physics.geo-ph",
+       "label": "Geophysics",
+       "emoji": "🔬",
+       "code": "physics.geo-ph",
+       "count": 9
+      },
+      {
+       "id": "arxiv:physics.hist-ph",
+       "label": "History and Philosophy of Physics",
+       "emoji": "🔬",
+       "code": "physics.hist-ph",
+       "count": 4
+      },
+      {
+       "id": "arxiv:physics.ins-det",
+       "label": "Instrumentation and Detectors",
+       "emoji": "🔬",
+       "code": "physics.ins-det",
+       "count": 15
+      },
+      {
+       "id": "arxiv:physics.med-ph",
+       "label": "Medical Physics",
+       "emoji": "🔬",
+       "code": "physics.med-ph",
+       "count": 5
+      },
+      {
+       "id": "arxiv:physics.optics",
+       "label": "Optics",
+       "emoji": "🔬",
+       "code": "physics.optics",
+       "count": 30
+      },
+      {
+       "id": "arxiv:physics.plasm-ph",
+       "label": "Plasma Physics",
+       "emoji": "🔬",
+       "code": "physics.plasm-ph",
+       "count": 16
+      },
+      {
+       "id": "arxiv:physics.pop-ph",
+       "label": "Popular Physics",
+       "emoji": "🔬",
+       "code": "physics.pop-ph",
+       "count": 1
+      },
+      {
+       "id": "arxiv:physics.soc-ph",
+       "label": "Physics and Society",
+       "emoji": "🔬",
+       "code": "physics.soc-ph",
+       "count": 16
+      },
+      {
+       "id": "arxiv:physics.space-ph",
+       "label": "Space Physics",
+       "emoji": "🔬",
+       "code": "physics.space-ph",
+       "count": 1
+      },
+      {
+       "id": "arxiv:quant-ph",
+       "label": "Quantum Physics",
+       "emoji": "⚛️",
+       "code": "quant-ph",
+       "count": 30
+      }
+     ]
+    },
+    {
+     "id": "q-bio",
+     "label": "Quantitative Biology",
+     "emoji": "🧬",
+     "categories": [
+      {
+       "id": "arxiv:q-bio.BM",
+       "label": "Biomolecules",
+       "emoji": "🧬",
+       "code": "q-bio.BM",
+       "count": 5
+      },
+      {
+       "id": "arxiv:q-bio.CB",
+       "label": "Cell Behavior",
+       "emoji": "🦠",
+       "code": "q-bio.CB",
+       "count": 3
+      },
+      {
+       "id": "arxiv:q-bio.GN",
+       "label": "Genomics",
+       "emoji": "🧬",
+       "code": "q-bio.GN",
+       "count": 2
+      },
+      {
+       "id": "arxiv:q-bio.MN",
+       "label": "Molecular Networks",
+       "emoji": "🕸️",
+       "code": "q-bio.MN",
+       "count": 4
+      },
+      {
+       "id": "arxiv:q-bio.NC",
+       "label": "Neurons and Cognition",
+       "emoji": "🧠",
+       "code": "q-bio.NC",
+       "count": 15
+      },
+      {
+       "id": "arxiv:q-bio.OT",
+       "label": "Other Quantitative Biology",
+       "emoji": "🔬",
+       "code": "q-bio.OT",
+       "count": 2
+      },
+      {
+       "id": "arxiv:q-bio.PE",
+       "label": "Populations and Evolution",
+       "emoji": "🌱",
+       "code": "q-bio.PE",
+       "count": 18
+      },
+      {
+       "id": "arxiv:q-bio.QM",
+       "label": "Quantitative Methods",
+       "emoji": "📏",
+       "code": "q-bio.QM",
+       "count": 14
+      },
+      {
+       "id": "arxiv:q-bio.TO",
+       "label": "Tissues and Organs",
+       "emoji": "🫀",
+       "code": "q-bio.TO",
+       "count": 2
+      }
+     ]
+    },
+    {
+     "id": "q-fin",
+     "label": "Quantitative Finance",
+     "emoji": "🏦",
+     "categories": [
+      {
+       "id": "arxiv:q-fin.CP",
+       "label": "Computational Finance",
+       "emoji": "💹",
+       "code": "q-fin.CP",
+       "count": 5
+      },
+      {
+       "id": "arxiv:q-fin.EC",
+       "label": "Economics",
+       "emoji": "📈",
+       "code": "q-fin.EC",
+       "count": 16
+      },
+      {
+       "id": "arxiv:q-fin.GN",
+       "label": "General Finance",
+       "emoji": "🏦",
+       "code": "q-fin.GN",
+       "count": 4
+      },
+      {
+       "id": "arxiv:q-fin.MF",
+       "label": "Mathematical Finance",
+       "emoji": "📊",
+       "code": "q-fin.MF",
+       "count": 8
+      },
+      {
+       "id": "arxiv:q-fin.PM",
+       "label": "Portfolio Management",
+       "emoji": "🏦",
+       "code": "q-fin.PM",
+       "count": 4
+      },
+      {
+       "id": "arxiv:q-fin.PR",
+       "label": "Pricing of Securities",
+       "emoji": "🏦",
+       "code": "q-fin.PR",
+       "count": 1
+      },
+      {
+       "id": "arxiv:q-fin.RM",
+       "label": "Risk Management",
+       "emoji": "🏦",
+       "code": "q-fin.RM",
+       "count": 7
+      },
+      {
+       "id": "arxiv:q-fin.ST",
+       "label": "Statistical Finance",
+       "emoji": "🏦",
+       "code": "q-fin.ST",
+       "count": 5
+      },
+      {
+       "id": "arxiv:q-fin.TR",
+       "label": "Trading and Market Microstructure",
+       "emoji": "🏦",
+       "code": "q-fin.TR",
+       "count": 8
+      }
+     ]
+    },
+    {
+     "id": "stat",
+     "label": "Statistics",
+     "emoji": "📈",
+     "categories": [
+      {
+       "id": "arxiv:stat.AP",
+       "label": "Applications",
+       "emoji": "📈",
+       "code": "stat.AP",
+       "count": 30
+      },
+      {
+       "id": "arxiv:stat.CO",
+       "label": "Computation",
+       "emoji": "📈",
+       "code": "stat.CO",
+       "count": 17
+      },
+      {
+       "id": "arxiv:stat.ME",
+       "label": "Methodology",
+       "emoji": "📉",
+       "code": "stat.ME",
+       "count": 30
+      },
+      {
+       "id": "arxiv:stat.ML",
+       "label": "Machine Learning",
+       "emoji": "📈",
+       "code": "stat.ML",
+       "count": 30
+      },
+      {
+       "id": "arxiv:stat.TH",
+       "label": "Statistics Theory",
+       "emoji": "🎓",
+       "code": "stat.TH",
+       "count": 30
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hfpapers",
+   "label": "Hugging Face",
+   "emoji": "🤗",
+   "blurb": "Trending AI papers, curated daily",
+   "failed": false,
+   "total": 270,
+   "groups": [
+    {
+     "id": "_all",
+     "label": null,
+     "categories": [
+      {
+       "id": "hfpapers:trending",
+       "label": "Trending",
+       "emoji": "🔥",
+       "code": "trending",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:agents",
+       "label": "Agents & Tool Use",
+       "emoji": "🤖",
+       "code": "agents",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:reasoning",
+       "label": "Reasoning & Test-Time Compute",
+       "emoji": "🧠",
+       "code": "reasoning",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:rl-post-training",
+       "label": "RL & Post-Training",
+       "emoji": "🎯",
+       "code": "rl-post-training",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:multimodal",
+       "label": "Multimodal & Vision-Language",
+       "emoji": "👁️",
+       "code": "multimodal",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:generative",
+       "label": "Generative Media",
+       "emoji": "🎨",
+       "code": "generative",
+       "count": 29
+      },
+      {
+       "id": "hfpapers:efficiency",
+       "label": "Efficiency & Inference",
+       "emoji": "⚡",
+       "code": "efficiency",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:robotics",
+       "label": "Robotics & Embodied AI",
+       "emoji": "🦾",
+       "code": "robotics",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:retrieval",
+       "label": "Retrieval & Memory",
+       "emoji": "🔎",
+       "code": "retrieval",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:safety",
+       "label": "Safety & Alignment",
+       "emoji": "🛡️",
+       "code": "safety",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:benchmarks",
+       "label": "Benchmarks & Evaluation",
+       "emoji": "📊",
+       "code": "benchmarks",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:llm",
+       "label": "LLMs & Architectures",
+       "emoji": "🗣️",
+       "code": "llm",
+       "count": 30
+      },
+      {
+       "id": "hfpapers:other",
+       "label": "Other AI Research",
+       "emoji": "🔬",
+       "code": "other",
+       "count": 4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "biorxiv",
+   "label": "bioRxiv",
+   "emoji": "🧬",
+   "blurb": "Biology preprints",
+   "failed": false,
+   "total": 537,
+   "groups": [
+    {
+     "id": "_all",
+     "label": null,
+     "categories": [
+      {
+       "id": "biorxiv:animal-behavior-and-cognition",
+       "label": "Animal Behavior & Cognition",
+       "emoji": "🧬",
+       "code": "animal-behavior-and-cognition",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:biochemistry",
+       "label": "Biochemistry",
+       "emoji": "🧪",
+       "code": "biochemistry",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:bioengineering",
+       "label": "Bioengineering",
+       "emoji": "⚙️",
+       "code": "bioengineering",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:bioinformatics",
+       "label": "Bioinformatics",
+       "emoji": "💻",
+       "code": "bioinformatics",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:biophysics",
+       "label": "Biophysics",
+       "emoji": "⚛️",
+       "code": "biophysics",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:cancer-biology",
+       "label": "Cancer Biology",
+       "emoji": "🎗️",
+       "code": "cancer-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:cell-biology",
+       "label": "Cell Biology",
+       "emoji": "🔬",
+       "code": "cell-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:clinical-trials",
+       "label": "Clinical Trials",
+       "emoji": "💊",
+       "code": "clinical-trials",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:developmental-biology",
+       "label": "Developmental Biology",
+       "emoji": "🐣",
+       "code": "developmental-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:ecology",
+       "label": "Ecology",
+       "emoji": "🌿",
+       "code": "ecology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:epidemiology",
+       "label": "Epidemiology",
+       "emoji": "📊",
+       "code": "epidemiology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:evolutionary-biology",
+       "label": "Evolutionary Biology",
+       "emoji": "🐒",
+       "code": "evolutionary-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:genetics",
+       "label": "Genetics",
+       "emoji": "🧬",
+       "code": "genetics",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:genomics",
+       "label": "Genomics",
+       "emoji": "🧬",
+       "code": "genomics",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:immunology",
+       "label": "Immunology",
+       "emoji": "🛡️",
+       "code": "immunology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:microbiology",
+       "label": "Microbiology",
+       "emoji": "🦠",
+       "code": "microbiology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:molecular-biology",
+       "label": "Molecular Biology",
+       "emoji": "🧬",
+       "code": "molecular-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:neuroscience",
+       "label": "Neuroscience",
+       "emoji": "🧠",
+       "code": "neuroscience",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:paleontology",
+       "label": "Paleontology",
+       "emoji": "🦴",
+       "code": "paleontology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:pathology",
+       "label": "Pathology",
+       "emoji": "🩺",
+       "code": "pathology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:pharmacology-and-toxicology",
+       "label": "Pharmacology & Toxicology",
+       "emoji": "🧬",
+       "code": "pharmacology-and-toxicology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:physiology",
+       "label": "Physiology",
+       "emoji": "🫀",
+       "code": "physiology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:plant-biology",
+       "label": "Plant Biology",
+       "emoji": "🌱",
+       "code": "plant-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:scientific-communication-and-education",
+       "label": "Scientific Communication & Education",
+       "emoji": "🧬",
+       "code": "scientific-communication-and-education",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:synthetic-biology",
+       "label": "Synthetic Biology",
+       "emoji": "🧫",
+       "code": "synthetic-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:systems-biology",
+       "label": "Systems Biology",
+       "emoji": "🕸️",
+       "code": "systems-biology",
+       "count": 30
+      },
+      {
+       "id": "biorxiv:zoology",
+       "label": "Zoology",
+       "emoji": "🐾",
+       "code": "zoology",
+       "count": 30
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "medrxiv",
+   "label": "medRxiv",
+   "emoji": "🩺",
+   "blurb": "Health sciences preprints",
+   "failed": false,
+   "total": 1500,
+   "groups": [
+    {
+     "id": "_all",
+     "label": null,
+     "categories": [
+      {
+       "id": "medrxiv:addiction-medicine",
+       "label": "Addiction Medicine",
+       "emoji": "🩺",
+       "code": "addiction-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:allergy-and-immunology",
+       "label": "Allergy & Immunology",
+       "emoji": "🩺",
+       "code": "allergy-and-immunology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:anesthesia",
+       "label": "Anesthesia",
+       "emoji": "🩺",
+       "code": "anesthesia",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:cardiovascular-medicine",
+       "label": "Cardiovascular Medicine",
+       "emoji": "🫀",
+       "code": "cardiovascular-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:dentistry-and-oral-medicine",
+       "label": "Dentistry & Oral Medicine",
+       "emoji": "🩺",
+       "code": "dentistry-and-oral-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:dermatology",
+       "label": "Dermatology",
+       "emoji": "🩹",
+       "code": "dermatology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:emergency-medicine",
+       "label": "Emergency Medicine",
+       "emoji": "🩺",
+       "code": "emergency-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:endocrinology-including-diabetes-mellitus-and-metabolic-disease",
+       "label": "Endocrinology & Metabolism",
+       "emoji": "🩺",
+       "code": "endocrinology-including-diabetes-mellitus-and-metabolic-disease",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:epidemiology",
+       "label": "Epidemiology",
+       "emoji": "📊",
+       "code": "epidemiology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:forensic-medicine",
+       "label": "Forensic Medicine",
+       "emoji": "🩺",
+       "code": "forensic-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:gastroenterology",
+       "label": "Gastroenterology",
+       "emoji": "🩺",
+       "code": "gastroenterology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:genetic-and-genomic-medicine",
+       "label": "Genetic & Genomic Medicine",
+       "emoji": "🩺",
+       "code": "genetic-and-genomic-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:geriatric-medicine",
+       "label": "Geriatric Medicine",
+       "emoji": "🩺",
+       "code": "geriatric-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:health-economics",
+       "label": "Health Economics",
+       "emoji": "💹",
+       "code": "health-economics",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:health-informatics",
+       "label": "Health Informatics",
+       "emoji": "💻",
+       "code": "health-informatics",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:health-policy",
+       "label": "Health Policy",
+       "emoji": "🏛️",
+       "code": "health-policy",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:health-systems-and-quality-improvement",
+       "label": "Health Systems & Quality",
+       "emoji": "🩺",
+       "code": "health-systems-and-quality-improvement",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:hematology",
+       "label": "Hematology",
+       "emoji": "🩺",
+       "code": "hematology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:hiv-aids",
+       "label": "HIV/AIDS",
+       "emoji": "🎗️",
+       "code": "hiv-aids",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:intensive-care-and-critical-care-medicine",
+       "label": "Intensive & Critical Care",
+       "emoji": "🩺",
+       "code": "intensive-care-and-critical-care-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:medical-education",
+       "label": "Medical Education",
+       "emoji": "🩺",
+       "code": "medical-education",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:medical-ethics",
+       "label": "Medical Ethics",
+       "emoji": "🩺",
+       "code": "medical-ethics",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:nephrology",
+       "label": "Nephrology",
+       "emoji": "🩺",
+       "code": "nephrology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:neurology",
+       "label": "Neurology",
+       "emoji": "🧠",
+       "code": "neurology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:nursing",
+       "label": "Nursing",
+       "emoji": "🧑‍⚕️",
+       "code": "nursing",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:nutrition",
+       "label": "Nutrition",
+       "emoji": "🥗",
+       "code": "nutrition",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:obstetrics-and-gynecology",
+       "label": "Obstetrics & Gynecology",
+       "emoji": "🩺",
+       "code": "obstetrics-and-gynecology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:occupational-and-environmental-health",
+       "label": "Occupational & Environmental Health",
+       "emoji": "🩺",
+       "code": "occupational-and-environmental-health",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:oncology",
+       "label": "Oncology",
+       "emoji": "🎗️",
+       "code": "oncology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:ophthalmology",
+       "label": "Ophthalmology",
+       "emoji": "👁️",
+       "code": "ophthalmology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:orthopedics",
+       "label": "Orthopedics",
+       "emoji": "🩺",
+       "code": "orthopedics",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:otolaryngology",
+       "label": "Otolaryngology",
+       "emoji": "🩺",
+       "code": "otolaryngology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:pain-medicine",
+       "label": "Pain Medicine",
+       "emoji": "🩺",
+       "code": "pain-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:palliative-medicine",
+       "label": "Palliative Medicine",
+       "emoji": "🩺",
+       "code": "palliative-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:pathology",
+       "label": "Pathology",
+       "emoji": "🩺",
+       "code": "pathology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:pediatrics",
+       "label": "Pediatrics",
+       "emoji": "🧒",
+       "code": "pediatrics",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:pharmacology-and-therapeutics",
+       "label": "Pharmacology & Therapeutics",
+       "emoji": "🩺",
+       "code": "pharmacology-and-therapeutics",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:primary-care-research",
+       "label": "Primary Care Research",
+       "emoji": "🩺",
+       "code": "primary-care-research",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:psychiatry-and-clinical-psychology",
+       "label": "Psychiatry and Clinical Psychology",
+       "emoji": "🧠",
+       "code": "psychiatry-and-clinical-psychology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:public-and-global-health",
+       "label": "Public & Global Health",
+       "emoji": "🌍",
+       "code": "public-and-global-health",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:radiology-and-imaging",
+       "label": "Radiology & Imaging",
+       "emoji": "🩺",
+       "code": "radiology-and-imaging",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:rehabilitation-medicine-and-physical-therapy",
+       "label": "Rehabilitation & Physical Therapy",
+       "emoji": "🩺",
+       "code": "rehabilitation-medicine-and-physical-therapy",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:respiratory-medicine",
+       "label": "Respiratory Medicine",
+       "emoji": "🫁",
+       "code": "respiratory-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:rheumatology",
+       "label": "Rheumatology",
+       "emoji": "🩺",
+       "code": "rheumatology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:sexual-and-reproductive-health",
+       "label": "Sexual & Reproductive Health",
+       "emoji": "🩺",
+       "code": "sexual-and-reproductive-health",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:sports-medicine",
+       "label": "Sports Medicine",
+       "emoji": "🏃",
+       "code": "sports-medicine",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:surgery",
+       "label": "Surgery",
+       "emoji": "🔪",
+       "code": "surgery",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:toxicology",
+       "label": "Toxicology",
+       "emoji": "🩺",
+       "code": "toxicology",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:transplantation",
+       "label": "Transplantation",
+       "emoji": "🩺",
+       "code": "transplantation",
+       "count": 30
+      },
+      {
+       "id": "medrxiv:urology",
+       "label": "Urology",
+       "emoji": "🩺",
+       "code": "urology",
+       "count": 30
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nber",
+   "label": "NBER",
+   "emoji": "🏦",
+   "blurb": "Economics & finance working papers",
+   "failed": false,
+   "total": 34,
+   "groups": [
+    {
+     "id": "_all",
+     "label": null,
+     "categories": [
+      {
+       "id": "nber:agriculture",
+       "label": "Agriculture",
+       "emoji": "🏦",
+       "code": "agriculture",
+       "count": 1
+      },
+      {
+       "id": "nber:development-and-growth",
+       "label": "Development and Growth",
+       "emoji": "📈",
+       "code": "development-and-growth",
+       "count": 6
+      },
+      {
+       "id": "nber:econometrics",
+       "label": "Econometrics",
+       "emoji": "📊",
+       "code": "econometrics",
+       "count": 5
+      },
+      {
+       "id": "nber:environmental-and-resource-economics",
+       "label": "Environmental and Resource Economics",
+       "emoji": "🌱",
+       "code": "environmental-and-resource-economics",
+       "count": 2
+      },
+      {
+       "id": "nber:financial-economics",
+       "label": "Financial Economics",
+       "emoji": "🏦",
+       "code": "financial-economics",
+       "count": 5
+      },
+      {
+       "id": "nber:growth-and-productivity",
+       "label": "Growth and Productivity",
+       "emoji": "🏦",
+       "code": "growth-and-productivity",
+       "count": 1
+      },
+      {
+       "id": "nber:health-education-and-welfare",
+       "label": "Health, Education, and Welfare",
+       "emoji": "🏥",
+       "code": "health-education-and-welfare",
+       "count": 10
+      },
+      {
+       "id": "nber:history",
+       "label": "History",
+       "emoji": "📜",
+       "code": "history",
+       "count": 3
+      },
+      {
+       "id": "nber:industrial-organization",
+       "label": "Industrial Organization",
+       "emoji": "🏭",
+       "code": "industrial-organization",
+       "count": 5
+      },
+      {
+       "id": "nber:labor-economics",
+       "label": "Labor Economics",
+       "emoji": "👷",
+       "code": "labor-economics",
+       "count": 14
+      },
+      {
+       "id": "nber:macroeconomics",
+       "label": "Macroeconomics",
+       "emoji": "📉",
+       "code": "macroeconomics",
+       "count": 5
+      },
+      {
+       "id": "nber:microeconomics",
+       "label": "Microeconomics",
+       "emoji": "🧮",
+       "code": "microeconomics",
+       "count": 10
+      },
+      {
+       "id": "nber:other",
+       "label": "Other",
+       "emoji": "🏦",
+       "code": "other",
+       "count": 3
+      },
+      {
+       "id": "nber:public-economics",
+       "label": "Public Economics",
+       "emoji": "🏛️",
+       "code": "public-economics",
+       "count": 8
+      },
+      {
+       "id": "nber:regional-and-urban-economics",
+       "label": "Regional and Urban Economics",
+       "emoji": "🏙️",
+       "code": "regional-and-urban-economics",
+       "count": 5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "techrxiv",
+   "label": "TechRxiv",
+   "emoji": "⚙️",
+   "blurb": "Engineering & technology preprints",
+   "failed": false,
+   "total": 99,
+   "groups": [
+    {
+     "id": "_all",
+     "label": null,
+     "categories": [
+      {
+       "id": "techrxiv:agricultural-and-biological-sciences",
+       "label": "Agricultural and Biological Sciences",
+       "emoji": "🌾",
+       "code": "agricultural-and-biological-sciences",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:business-management-and-accounting",
+       "label": "Business, Management and Accounting",
+       "emoji": "💼",
+       "code": "business-management-and-accounting",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:computer-science",
+       "label": "Computer Science",
+       "emoji": "💻",
+       "code": "computer-science",
+       "count": 30
+      },
+      {
+       "id": "techrxiv:earth-and-planetary-sciences",
+       "label": "Earth and Planetary Sciences",
+       "emoji": "🪨",
+       "code": "earth-and-planetary-sciences",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:engineering",
+       "label": "Engineering",
+       "emoji": "⚙️",
+       "code": "engineering",
+       "count": 30
+      },
+      {
+       "id": "techrxiv:environmental-science",
+       "label": "Environmental Science",
+       "emoji": "🌍",
+       "code": "environmental-science",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:health-professions",
+       "label": "Health Professions",
+       "emoji": "🏥",
+       "code": "health-professions",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:materials-science",
+       "label": "Materials Science",
+       "emoji": "🧱",
+       "code": "materials-science",
+       "count": 3
+      },
+      {
+       "id": "techrxiv:mathematics",
+       "label": "Mathematics",
+       "emoji": "📐",
+       "code": "mathematics",
+       "count": 2
+      },
+      {
+       "id": "techrxiv:medicine",
+       "label": "Medicine",
+       "emoji": "🩺",
+       "code": "medicine",
+       "count": 4
+      },
+      {
+       "id": "techrxiv:neuroscience",
+       "label": "Neuroscience",
+       "emoji": "🧠",
+       "code": "neuroscience",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:physics-and-astronomy",
+       "label": "Physics and Astronomy",
+       "emoji": "🔭",
+       "code": "physics-and-astronomy",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:psychology",
+       "label": "Psychology",
+       "emoji": "🧠",
+       "code": "psychology",
+       "count": 3
+      },
+      {
+       "id": "techrxiv:social-sciences",
+       "label": "Social Sciences",
+       "emoji": "👥",
+       "code": "social-sciences",
+       "count": 10
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
