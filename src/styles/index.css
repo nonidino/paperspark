@@ -179,6 +179,12 @@ a { color: var(--text-link); text-decoration: none; }
 
 .reel-content::-webkit-scrollbar { display: none; }
 
+.reel-upvotes {
+  color: var(--accent-orange, #f59e0b);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* Source + category line above the title */
 .reel-tagline {
   display: flex;

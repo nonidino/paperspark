@@ -18,12 +18,13 @@ import arxiv from './sources/arxiv.mjs';
 import { biorxiv, medrxiv } from './sources/rxiv.mjs';
 import nber from './sources/nber.mjs';
 import techrxiv from './sources/techrxiv.mjs';
+import hfpapers from './sources/hfpapers.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_DIR = join(ROOT, 'data');
 const PER_CATEGORY = 30;
 
-const SOURCES = [arxiv, biorxiv, medrxiv, nber, techrxiv];
+const SOURCES = [arxiv, hfpapers, biorxiv, medrxiv, nber, techrxiv];
 
 const log = (msg) => console.log(msg);
 
@@ -116,7 +117,7 @@ async function runSource(source) {
 
 /** Fields used only while fetching shouldn't reach the browser. */
 function stripInternal(paper) {
-  const { announceType, siteBase, ...rest } = paper;
+  const { announceType, siteBase, keywords, ...rest } = paper;
   return rest;
 }
 

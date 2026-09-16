@@ -51,14 +51,26 @@ export async function fetchRecent(categoryIds = [], maxResults = 10) {
 
   const lists = await Promise.all(ids.map(fetchCategory));
 
-  const seen = new Set();
-  const bySource = new Map();
+  // Hugging Face's picks are arXiv papers, so the same work can arrive twice.
+  // Collapse on dedupeKey and keep the richer copy — the curated one carries
+  // upvotes, which is the whole reason to follow that feed.
+  const byKey = new Map();
 
   for (const paper of lists.flat()) {
     const id = paper?.id || (paper?.arxivId ? `arxiv:${paper.arxivId}` : null);
-    if (!id || seen.has(id)) continue;
-    seen.add(id);
+    if (!id) continue;
 
+    const key = paper.dedupeKey || id;
+    const existing = byKey.get(key);
+    if (existing) {
+      if ((paper.upvotes || 0) > (existing.upvotes || 0)) byKey.set(key, { ...paper, id });
+      continue;
+    }
+    byKey.set(key, { ...paper, id });
+  }
+
+  const bySource = new Map();
+  for (const paper of byKey.values()) {
     const source = paper.source || 'arxiv';
     // Label the card with a category the reader actually asked for, not
     // whichever one the paper happens to list first.
@@ -66,7 +78,7 @@ export async function fetchRecent(categoryIds = [], maxResults = 10) {
       (paper.categories || []).find((c) => selected.has(c)) || (paper.categories || [])[0];
 
     if (!bySource.has(source)) bySource.set(source, []);
-    bySource.get(source).push({ ...paper, id, source, primaryCategory });
+    bySource.get(source).push({ ...paper, source, primaryCategory });
   }
 
   for (const list of bySource.values()) {

@@ -237,6 +237,10 @@ function renderReelCard(paper, index) {
           <span>${esc(authors)}</span>
           <span class="reel-meta-dot"></span>
           <span>${date}</span>
+          ${paper.upvotes ? `
+          <span class="reel-meta-dot"></span>
+          <span class="reel-upvotes" title="Upvotes on Hugging Face">▲ ${paper.upvotes}</span>
+          ` : ''}
         </div>
 
         <div class="reel-section">
