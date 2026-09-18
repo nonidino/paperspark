@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-18T12:12:09.054Z",
+ "generatedAt": "2026-09-18T21:26:25.990Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1145,7 +1145,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 274,
+   "total": 277,
    "groups": [
     {
      "id": "_all",
@@ -1252,7 +1252,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 529,
+   "total": 540,
    "groups": [
     {
      "id": "_all",
