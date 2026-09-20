@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-19T21:16:14.055Z",
+ "generatedAt": "2026-09-20T12:00:13.356Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1252,7 +1252,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 527,
+   "total": 517,
    "groups": [
     {
      "id": "_all",
