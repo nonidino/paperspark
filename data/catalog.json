@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-24T12:52:51.596Z",
+ "generatedAt": "2026-09-24T21:59:10.673Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 271,
+   "total": 275,
    "groups": [
     {
      "id": "_all",
@@ -1254,7 +1254,7 @@
        "label": "Other AI Research",
        "emoji": "🔬",
        "code": "other",
-       "count": 6
+       "count": 8
       }
      ]
     }
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 0,
+   "total": 534,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1260,
+   "total": 1500,
    "groups": [
     {
      "id": "_all",
