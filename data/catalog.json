@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T14:09:25.337Z",
+ "generatedAt": "2026-10-01T23:02:42.732Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 457,
+   "total": 473,
    "groups": [
     {
      "id": "_all",
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 535,
+   "total": 540,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1341,
+   "total": 1352,
    "groups": [
     {
      "id": "_all",
@@ -1482,7 +1482,7 @@
        "label": "Addiction Medicine",
        "emoji": "🩺",
        "code": "addiction-medicine",
-       "count": 28
+       "count": 29
       },
       {
        "id": "medrxiv:allergy-and-immunology",
@@ -1524,7 +1524,7 @@
        "label": "Emergency Medicine",
        "emoji": "🩺",
        "code": "emergency-medicine",
-       "count": 24
+       "count": 25
       },
       {
        "id": "medrxiv:endocrinology-including-diabetes-mellitus-and-metabolic-disease",
@@ -1573,7 +1573,7 @@
        "label": "Health Economics",
        "emoji": "💹",
        "code": "health-economics",
-       "count": 25
+       "count": 26
       },
       {
        "id": "medrxiv:health-informatics",
@@ -1615,7 +1615,7 @@
        "label": "Intensive & Critical Care",
        "emoji": "🩺",
        "code": "intensive-care-and-critical-care-medicine",
-       "count": 29
+       "count": 30
       },
       {
        "id": "medrxiv:medical-education",
@@ -1664,7 +1664,7 @@
        "label": "Obstetrics & Gynecology",
        "emoji": "🩺",
        "code": "obstetrics-and-gynecology",
-       "count": 27
+       "count": 30
       },
       {
        "id": "medrxiv:occupational-and-environmental-health",
@@ -1720,7 +1720,7 @@
        "label": "Pathology",
        "emoji": "🩺",
        "code": "pathology",
-       "count": 19
+       "count": 20
       },
       {
        "id": "medrxiv:pediatrics",
@@ -1783,7 +1783,7 @@
        "label": "Rheumatology",
        "emoji": "🩺",
        "code": "rheumatology",
-       "count": 28
+       "count": 30
       },
       {
        "id": "medrxiv:sexual-and-reproductive-health",
@@ -1804,7 +1804,7 @@
        "label": "Surgery",
        "emoji": "🔪",
        "code": "surgery",
-       "count": 28
+       "count": 29
       },
       {
        "id": "medrxiv:toxicology",
