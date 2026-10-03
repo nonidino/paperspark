@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-02T22:48:55.028Z",
+ "generatedAt": "2026-10-03T12:14:22.649Z",
  "perCategory": 30,
  "sources": [
   {
@@ -8,7 +8,7 @@
    "emoji": "📄",
    "blurb": "Physics, maths, CS, economics and more",
    "failed": false,
-   "total": 3193,
+   "total": 0,
    "groups": [
     {
      "id": "cs",
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 533,
+   "total": 535,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1356,
+   "total": 1367,
    "groups": [
     {
      "id": "_all",
@@ -1482,14 +1482,14 @@
        "label": "Addiction Medicine",
        "emoji": "🩺",
        "code": "addiction-medicine",
-       "count": 29
+       "count": 30
       },
       {
        "id": "medrxiv:allergy-and-immunology",
        "label": "Allergy & Immunology",
        "emoji": "🩺",
        "code": "allergy-and-immunology",
-       "count": 27
+       "count": 28
       },
       {
        "id": "medrxiv:anesthesia",
@@ -1517,7 +1517,7 @@
        "label": "Dermatology",
        "emoji": "🩹",
        "code": "dermatology",
-       "count": 24
+       "count": 25
       },
       {
        "id": "medrxiv:emergency-medicine",
@@ -1566,7 +1566,7 @@
        "label": "Geriatric Medicine",
        "emoji": "🩺",
        "code": "geriatric-medicine",
-       "count": 27
+       "count": 28
       },
       {
        "id": "medrxiv:health-economics",
@@ -1587,7 +1587,7 @@
        "label": "Health Policy",
        "emoji": "🏛️",
        "code": "health-policy",
-       "count": 28
+       "count": 30
       },
       {
        "id": "medrxiv:health-systems-and-quality-improvement",
@@ -1608,7 +1608,7 @@
        "label": "HIV/AIDS",
        "emoji": "🎗️",
        "code": "hiv-aids",
-       "count": 28
+       "count": 29
       },
       {
        "id": "medrxiv:intensive-care-and-critical-care-medicine",
@@ -1622,7 +1622,7 @@
        "label": "Medical Education",
        "emoji": "🩺",
        "code": "medical-education",
-       "count": 26
+       "count": 27
       },
       {
        "id": "medrxiv:medical-ethics",
@@ -1713,7 +1713,7 @@
        "label": "Palliative Medicine",
        "emoji": "🩺",
        "code": "palliative-medicine",
-       "count": 26
+       "count": 27
       },
       {
        "id": "medrxiv:pathology",
@@ -1797,7 +1797,7 @@
        "label": "Sports Medicine",
        "emoji": "🏃",
        "code": "sports-medicine",
-       "count": 22
+       "count": 23
       },
       {
        "id": "medrxiv:surgery",
@@ -1825,7 +1825,7 @@
        "label": "Urology",
        "emoji": "🩺",
        "code": "urology",
-       "count": 16
+       "count": 17
       }
      ]
     }
