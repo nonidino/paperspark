@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-06T13:55:01.191Z",
+ "generatedAt": "2026-10-06T22:56:16.753Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 587,
+   "total": 610,
    "groups": [
     {
      "id": "_all",
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 539,
+   "total": 540,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1372,
+   "total": 1378,
    "groups": [
     {
      "id": "_all",
@@ -1566,7 +1566,7 @@
        "label": "Geriatric Medicine",
        "emoji": "🩺",
        "code": "geriatric-medicine",
-       "count": 28
+       "count": 29
       },
       {
        "id": "medrxiv:health-economics",
@@ -1601,7 +1601,7 @@
        "label": "Hematology",
        "emoji": "🩺",
        "code": "hematology",
-       "count": 29
+       "count": 30
       },
       {
        "id": "medrxiv:hiv-aids",
@@ -1650,7 +1650,7 @@
        "label": "Nursing",
        "emoji": "🧑‍⚕️",
        "code": "nursing",
-       "count": 25
+       "count": 26
       },
       {
        "id": "medrxiv:nutrition",
@@ -1685,7 +1685,7 @@
        "label": "Ophthalmology",
        "emoji": "👁️",
        "code": "ophthalmology",
-       "count": 27
+       "count": 28
       },
       {
        "id": "medrxiv:orthopedics",
@@ -1699,14 +1699,14 @@
        "label": "Otolaryngology",
        "emoji": "🩺",
        "code": "otolaryngology",
-       "count": 23
+       "count": 24
       },
       {
        "id": "medrxiv:pain-medicine",
        "label": "Pain Medicine",
        "emoji": "🩺",
        "code": "pain-medicine",
-       "count": 28
+       "count": 29
       },
       {
        "id": "medrxiv:palliative-medicine",
@@ -1979,6 +1979,13 @@
        "count": 1
       },
       {
+       "id": "techrxiv:chemistry",
+       "label": "Chemistry",
+       "emoji": "🧪",
+       "code": "chemistry",
+       "count": 1
+      },
+      {
        "id": "techrxiv:computer-science",
        "label": "Computer Science",
        "emoji": "💻",
@@ -1986,10 +1993,17 @@
        "count": 30
       },
       {
-       "id": "techrxiv:earth-and-planetary-sciences",
-       "label": "Earth and Planetary Sciences",
-       "emoji": "🪨",
-       "code": "earth-and-planetary-sciences",
+       "id": "techrxiv:decision-sciences",
+       "label": "Decision Sciences",
+       "emoji": "🎯",
+       "code": "decision-sciences",
+       "count": 1
+      },
+      {
+       "id": "techrxiv:economics-econometrics-and-finance",
+       "label": "Economics, Econometrics and Finance",
+       "emoji": "💹",
+       "code": "economics-econometrics-and-finance",
        "count": 1
       },
       {
@@ -2000,39 +2014,32 @@
        "count": 30
       },
       {
-       "id": "techrxiv:health-professions",
-       "label": "Health Professions",
-       "emoji": "🏥",
-       "code": "health-professions",
-       "count": 1
-      },
-      {
        "id": "techrxiv:materials-science",
        "label": "Materials Science",
        "emoji": "🧱",
        "code": "materials-science",
-       "count": 3
+       "count": 2
       },
       {
        "id": "techrxiv:mathematics",
        "label": "Mathematics",
        "emoji": "📐",
        "code": "mathematics",
-       "count": 2
+       "count": 1
       },
       {
        "id": "techrxiv:medicine",
        "label": "Medicine",
        "emoji": "🩺",
        "code": "medicine",
-       "count": 4
+       "count": 3
       },
       {
        "id": "techrxiv:neuroscience",
        "label": "Neuroscience",
        "emoji": "🧠",
        "code": "neuroscience",
-       "count": 1
+       "count": 2
       },
       {
        "id": "techrxiv:physics-and-astronomy",
@@ -2046,14 +2053,14 @@
        "label": "Psychology",
        "emoji": "🧠",
        "code": "psychology",
-       "count": 3
+       "count": 2
       },
       {
        "id": "techrxiv:social-sciences",
        "label": "Social Sciences",
        "emoji": "👥",
        "code": "social-sciences",
-       "count": 10
+       "count": 5
       }
      ]
     }
