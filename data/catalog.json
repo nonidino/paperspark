@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-09T23:02:56.467Z",
+ "generatedAt": "2026-10-10T13:15:57.454Z",
  "perCategory": 30,
  "sources": [
   {
@@ -8,7 +8,7 @@
    "emoji": "📄",
    "blurb": "Physics, maths, CS, economics and more",
    "failed": false,
-   "total": 2953,
+   "total": 0,
    "groups": [
     {
      "id": "cs",
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 755,
+   "total": 756,
    "groups": [
     {
      "id": "_all",
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 538,
+   "total": 519,
    "groups": [
     {
      "id": "_all",
