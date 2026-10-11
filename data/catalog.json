@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-10T22:11:41.351Z",
+ "generatedAt": "2026-10-11T13:45:44.971Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 519,
+   "total": 515,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1396,
+   "total": 1397,
    "groups": [
     {
      "id": "_all",
@@ -1573,7 +1573,7 @@
        "label": "Health Economics",
        "emoji": "💹",
        "code": "health-economics",
-       "count": 29
+       "count": 30
       },
       {
        "id": "medrxiv:health-informatics",
