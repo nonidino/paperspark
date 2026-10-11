@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-11T13:45:44.971Z",
+ "generatedAt": "2026-10-11T22:41:44.962Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1397,
+   "total": 1398,
    "groups": [
     {
      "id": "_all",
@@ -1650,7 +1650,7 @@
        "label": "Nursing",
        "emoji": "🧑‍⚕️",
        "code": "nursing",
-       "count": 26
+       "count": 27
       },
       {
        "id": "medrxiv:nutrition",
