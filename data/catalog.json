@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-13T01:07:48.909Z",
+ "generatedAt": "2026-10-13T14:46:55.396Z",
  "perCategory": 30,
  "sources": [
   {
@@ -8,7 +8,7 @@
    "emoji": "📄",
    "blurb": "Physics, maths, CS, economics and more",
    "failed": false,
-   "total": 2352,
+   "total": 0,
    "groups": [
     {
      "id": "cs",
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 683,
+   "total": 700,
    "groups": [
     {
      "id": "_all",
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 530,
+   "total": 538,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1398,
+   "total": 1400,
    "groups": [
     {
      "id": "_all",
@@ -1496,7 +1496,7 @@
        "label": "Anesthesia",
        "emoji": "🩺",
        "code": "anesthesia",
-       "count": 26
+       "count": 27
       },
       {
        "id": "medrxiv:cardiovascular-medicine",
@@ -1720,7 +1720,7 @@
        "label": "Pathology",
        "emoji": "🩺",
        "code": "pathology",
-       "count": 20
+       "count": 21
       },
       {
        "id": "medrxiv:pediatrics",
