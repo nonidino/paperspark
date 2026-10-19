@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-18T21:15:18.229Z",
+ "generatedAt": "2026-10-19T14:17:34.024Z",
  "perCategory": 30,
  "sources": [
   {
@@ -8,7 +8,7 @@
    "emoji": "📄",
    "blurb": "Physics, maths, CS, economics and more",
    "failed": false,
-   "total": 0,
+   "total": 2457,
    "groups": [
     {
      "id": "cs",
@@ -27,28 +27,28 @@
        "label": "Hardware Architecture",
        "emoji": "🔧",
        "code": "cs.AR",
-       "count": 19
+       "count": 18
       },
       {
        "id": "arxiv:cs.CC",
        "label": "Computational Complexity",
        "emoji": "🧩",
        "code": "cs.CC",
-       "count": 13
+       "count": 14
       },
       {
        "id": "arxiv:cs.CE",
        "label": "Computational Engineering, Finance, and Science",
        "emoji": "⚙️",
        "code": "cs.CE",
-       "count": 15
+       "count": 10
       },
       {
        "id": "arxiv:cs.CG",
        "label": "Computational Geometry",
        "emoji": "📐",
        "code": "cs.CG",
-       "count": 11
+       "count": 9
       },
       {
        "id": "arxiv:cs.CL",
@@ -76,35 +76,35 @@
        "label": "Computers and Society",
        "emoji": "🏛️",
        "code": "cs.CY",
-       "count": 16
+       "count": 30
       },
       {
        "id": "arxiv:cs.DB",
        "label": "Databases",
        "emoji": "🗄️",
        "code": "cs.DB",
-       "count": 10
+       "count": 14
       },
       {
        "id": "arxiv:cs.DC",
        "label": "Distributed, Parallel, and Cluster Computing",
        "emoji": "🌐",
        "code": "cs.DC",
-       "count": 28
+       "count": 29
       },
       {
        "id": "arxiv:cs.DL",
        "label": "Digital Libraries",
        "emoji": "📚",
        "code": "cs.DL",
-       "count": 3
+       "count": 2
       },
       {
        "id": "arxiv:cs.DM",
        "label": "Discrete Mathematics",
        "emoji": "🔢",
        "code": "cs.DM",
-       "count": 20
+       "count": 17
       },
       {
        "id": "arxiv:cs.DS",
@@ -118,14 +118,14 @@
        "label": "Emerging Technologies",
        "emoji": "🚀",
        "code": "cs.ET",
-       "count": 10
+       "count": 11
       },
       {
        "id": "arxiv:cs.FL",
        "label": "Formal Languages and Automata Theory",
        "emoji": "🔤",
        "code": "cs.FL",
-       "count": 4
+       "count": 7
       },
       {
        "id": "arxiv:cs.GL",
@@ -139,14 +139,14 @@
        "label": "Graphics",
        "emoji": "🎨",
        "code": "cs.GR",
-       "count": 13
+       "count": 8
       },
       {
        "id": "arxiv:cs.GT",
        "label": "Computer Science and Game Theory",
        "emoji": "🎯",
        "code": "cs.GT",
-       "count": 16
+       "count": 21
       },
       {
        "id": "arxiv:cs.HC",
@@ -160,7 +160,7 @@
        "label": "Information Retrieval",
        "emoji": "🔍",
        "code": "cs.IR",
-       "count": 26
+       "count": 18
       },
       {
        "id": "arxiv:cs.IT",
@@ -188,21 +188,21 @@
        "label": "Multiagent Systems",
        "emoji": "👥",
        "code": "cs.MA",
-       "count": 30
+       "count": 29
       },
       {
        "id": "arxiv:cs.MM",
        "label": "Multimedia",
        "emoji": "🎬",
        "code": "cs.MM",
-       "count": 9
+       "count": 8
       },
       {
        "id": "arxiv:cs.MS",
        "label": "Mathematical Software",
        "emoji": "🧮",
        "code": "cs.MS",
-       "count": 4
+       "count": 1
       },
       {
        "id": "arxiv:cs.NA",
@@ -216,14 +216,14 @@
        "label": "Neural and Evolutionary Computing",
        "emoji": "⚡",
        "code": "cs.NE",
-       "count": 8
+       "count": 9
       },
       {
        "id": "arxiv:cs.NI",
        "label": "Networking and Internet Architecture",
        "emoji": "🌍",
        "code": "cs.NI",
-       "count": 15
+       "count": 16
       },
       {
        "id": "arxiv:cs.OH",
@@ -237,7 +237,7 @@
        "label": "Operating Systems",
        "emoji": "🖥️",
        "code": "cs.OS",
-       "count": 4
+       "count": 1
       },
       {
        "id": "arxiv:cs.PF",
@@ -251,7 +251,7 @@
        "label": "Programming Languages",
        "emoji": "💻",
        "code": "cs.PL",
-       "count": 15
+       "count": 11
       },
       {
        "id": "arxiv:cs.RO",
@@ -272,7 +272,7 @@
        "label": "Sound",
        "emoji": "🔊",
        "code": "cs.SD",
-       "count": 29
+       "count": 30
       },
       {
        "id": "arxiv:cs.SE",
@@ -286,7 +286,7 @@
        "label": "Social and Information Networks",
        "emoji": "🕸️",
        "code": "cs.SI",
-       "count": 7
+       "count": 12
       },
       {
        "id": "arxiv:cs.SY",
@@ -307,14 +307,14 @@
        "label": "Econometrics",
        "emoji": "💹",
        "code": "econ.EM",
-       "count": 9
+       "count": 8
       },
       {
        "id": "arxiv:econ.GN",
        "label": "General Economics",
        "emoji": "💹",
        "code": "econ.GN",
-       "count": 1
+       "count": 10
       },
       {
        "id": "arxiv:econ.TH",
@@ -335,14 +335,14 @@
        "label": "Audio and Speech Processing",
        "emoji": "🎙️",
        "code": "eess.AS",
-       "count": 19
+       "count": 12
       },
       {
        "id": "arxiv:eess.IV",
        "label": "Image and Video Processing",
        "emoji": "🖼️",
        "code": "eess.IV",
-       "count": 18
+       "count": 17
       },
       {
        "id": "arxiv:eess.SP",
@@ -370,7 +370,7 @@
        "label": "Commutative Algebra",
        "emoji": "📐",
        "code": "math.AC",
-       "count": 18
+       "count": 10
       },
       {
        "id": "arxiv:math.AG",
@@ -398,7 +398,7 @@
        "label": "Classical Analysis and ODEs",
        "emoji": "∫",
        "code": "math.CA",
-       "count": 19
+       "count": 24
       },
       {
        "id": "arxiv:math.CO",
@@ -412,14 +412,14 @@
        "label": "Category Theory",
        "emoji": "📐",
        "code": "math.CT",
-       "count": 11
+       "count": 8
       },
       {
        "id": "arxiv:math.CV",
        "label": "Complex Variables",
        "emoji": "📐",
        "code": "math.CV",
-       "count": 27
+       "count": 22
       },
       {
        "id": "arxiv:math.DG",
@@ -433,14 +433,14 @@
        "label": "Dynamical Systems",
        "emoji": "📐",
        "code": "math.DS",
-       "count": 30
+       "count": 26
       },
       {
        "id": "arxiv:math.FA",
        "label": "Functional Analysis",
        "emoji": "📐",
        "code": "math.FA",
-       "count": 28
+       "count": 24
       },
       {
        "id": "arxiv:math.GM",
@@ -454,28 +454,28 @@
        "label": "General Topology",
        "emoji": "📐",
        "code": "math.GN",
-       "count": 4
+       "count": 1
       },
       {
        "id": "arxiv:math.GR",
        "label": "Group Theory",
        "emoji": "📐",
        "code": "math.GR",
-       "count": 28
+       "count": 24
       },
       {
        "id": "arxiv:math.GT",
        "label": "Geometric Topology",
        "emoji": "📐",
        "code": "math.GT",
-       "count": 23
+       "count": 14
       },
       {
        "id": "arxiv:math.HO",
        "label": "History and Overview",
        "emoji": "📐",
        "code": "math.HO",
-       "count": 6
+       "count": 2
       },
       {
        "id": "arxiv:math.IT",
@@ -489,21 +489,21 @@
        "label": "K-Theory and Homology",
        "emoji": "📐",
        "code": "math.KT",
-       "count": 2
+       "count": 3
       },
       {
        "id": "arxiv:math.LO",
        "label": "Logic",
        "emoji": "📐",
        "code": "math.LO",
-       "count": 17
+       "count": 15
       },
       {
        "id": "arxiv:math.MG",
        "label": "Metric Geometry",
        "emoji": "📐",
        "code": "math.MG",
-       "count": 14
+       "count": 12
       },
       {
        "id": "arxiv:math.MP",
@@ -531,7 +531,7 @@
        "label": "Operator Algebras",
        "emoji": "📐",
        "code": "math.OA",
-       "count": 13
+       "count": 10
       },
       {
        "id": "arxiv:math.OC",
@@ -552,42 +552,42 @@
        "label": "Quantum Algebra",
        "emoji": "📐",
        "code": "math.QA",
-       "count": 12
+       "count": 7
       },
       {
        "id": "arxiv:math.RA",
        "label": "Rings and Algebras",
        "emoji": "📐",
        "code": "math.RA",
-       "count": 27
+       "count": 17
       },
       {
        "id": "arxiv:math.RT",
        "label": "Representation Theory",
        "emoji": "📐",
        "code": "math.RT",
-       "count": 24
+       "count": 20
       },
       {
        "id": "arxiv:math.SG",
        "label": "Symplectic Geometry",
        "emoji": "📐",
        "code": "math.SG",
-       "count": 10
+       "count": 7
       },
       {
        "id": "arxiv:math.SP",
        "label": "Spectral Theory",
        "emoji": "📐",
        "code": "math.SP",
-       "count": 8
+       "count": 6
       },
       {
        "id": "arxiv:math.ST",
        "label": "Statistics Theory",
        "emoji": "📐",
        "code": "math.ST",
-       "count": 29
+       "count": 26
       }
      ]
     },
@@ -608,7 +608,7 @@
        "label": "Earth and Planetary Astrophysics",
        "emoji": "🪐",
        "code": "astro-ph.EP",
-       "count": 24
+       "count": 14
       },
       {
        "id": "arxiv:astro-ph.GA",
@@ -636,14 +636,14 @@
        "label": "Solar and Stellar Astrophysics",
        "emoji": "☀️",
        "code": "astro-ph.SR",
-       "count": 27
+       "count": 28
       },
       {
        "id": "arxiv:cond-mat.dis-nn",
        "label": "Disordered Systems and Neural Networks",
        "emoji": "🌀",
        "code": "cond-mat.dis-nn",
-       "count": 8
+       "count": 12
       },
       {
        "id": "arxiv:cond-mat.mes-hall",
@@ -664,14 +664,14 @@
        "label": "Other Condensed Matter",
        "emoji": "🧊",
        "code": "cond-mat.other",
-       "count": 2
+       "count": 8
       },
       {
        "id": "arxiv:cond-mat.quant-gas",
        "label": "Quantum Gases",
        "emoji": "❄️",
        "code": "cond-mat.quant-gas",
-       "count": 15
+       "count": 10
       },
       {
        "id": "arxiv:cond-mat.soft",
@@ -699,7 +699,7 @@
        "label": "Superconductivity",
        "emoji": "🧲",
        "code": "cond-mat.supr-con",
-       "count": 13
+       "count": 15
       },
       {
        "id": "arxiv:gr-qc",
@@ -713,14 +713,14 @@
        "label": "High Energy Physics - Experiment",
        "emoji": "⚛️",
        "code": "hep-ex",
-       "count": 23
+       "count": 27
       },
       {
        "id": "arxiv:hep-lat",
        "label": "High Energy Physics - Lattice",
        "emoji": "⚛️",
        "code": "hep-lat",
-       "count": 8
+       "count": 9
       },
       {
        "id": "arxiv:hep-ph",
@@ -748,14 +748,14 @@
        "label": "Adaptation and Self-Organizing Systems",
        "emoji": "🦠",
        "code": "nlin.AO",
-       "count": 4
+       "count": 3
       },
       {
        "id": "arxiv:nlin.CD",
        "label": "Chaotic Dynamics",
        "emoji": "🌊",
        "code": "nlin.CD",
-       "count": 10
+       "count": 5
       },
       {
        "id": "arxiv:nlin.CG",
@@ -769,49 +769,49 @@
        "label": "Pattern Formation and Solitons",
        "emoji": "🌈",
        "code": "nlin.PS",
-       "count": 6
+       "count": 4
       },
       {
        "id": "arxiv:nlin.SI",
        "label": "Exactly Solvable and Integrable Systems",
        "emoji": "♾️",
        "code": "nlin.SI",
-       "count": 2
+       "count": 6
       },
       {
        "id": "arxiv:nucl-ex",
        "label": "Nuclear Experiment",
        "emoji": "☢️",
        "code": "nucl-ex",
-       "count": 5
+       "count": 10
       },
       {
        "id": "arxiv:nucl-th",
        "label": "Nuclear Theory",
        "emoji": "☢️",
        "code": "nucl-th",
-       "count": 15
+       "count": 19
       },
       {
        "id": "arxiv:physics.acc-ph",
        "label": "Accelerator Physics",
        "emoji": "🔬",
        "code": "physics.acc-ph",
-       "count": 3
+       "count": 5
       },
       {
        "id": "arxiv:physics.ao-ph",
        "label": "Atmospheric and Oceanic Physics",
        "emoji": "🌊",
        "code": "physics.ao-ph",
-       "count": 9
+       "count": 7
       },
       {
        "id": "arxiv:physics.app-ph",
        "label": "Applied Physics",
        "emoji": "🔌",
        "code": "physics.app-ph",
-       "count": 13
+       "count": 10
       },
       {
        "id": "arxiv:physics.atm-clus",
@@ -825,14 +825,14 @@
        "label": "Atomic Physics",
        "emoji": "⚛️",
        "code": "physics.atom-ph",
-       "count": 8
+       "count": 11
       },
       {
        "id": "arxiv:physics.bio-ph",
        "label": "Biological Physics",
        "emoji": "🧬",
        "code": "physics.bio-ph",
-       "count": 7
+       "count": 5
       },
       {
        "id": "arxiv:physics.chem-ph",
@@ -846,21 +846,21 @@
        "label": "Classical Physics",
        "emoji": "🔬",
        "code": "physics.class-ph",
-       "count": 2
+       "count": 1
       },
       {
        "id": "arxiv:physics.comp-ph",
        "label": "Computational Physics",
        "emoji": "🔬",
        "code": "physics.comp-ph",
-       "count": 30
+       "count": 21
       },
       {
        "id": "arxiv:physics.data-an",
        "label": "Data Analysis, Statistics and Probability",
        "emoji": "🔬",
        "code": "physics.data-an",
-       "count": 4
+       "count": 10
       },
       {
        "id": "arxiv:physics.ed-ph",
@@ -874,7 +874,7 @@
        "label": "Fluid Dynamics",
        "emoji": "💧",
        "code": "physics.flu-dyn",
-       "count": 19
+       "count": 22
       },
       {
        "id": "arxiv:physics.gen-ph",
@@ -888,7 +888,7 @@
        "label": "Geophysics",
        "emoji": "🔬",
        "code": "physics.geo-ph",
-       "count": 4
+       "count": 5
       },
       {
        "id": "arxiv:physics.hist-ph",
@@ -902,42 +902,42 @@
        "label": "Instrumentation and Detectors",
        "emoji": "🔬",
        "code": "physics.ins-det",
-       "count": 4
+       "count": 19
       },
       {
        "id": "arxiv:physics.med-ph",
        "label": "Medical Physics",
        "emoji": "🔬",
        "code": "physics.med-ph",
-       "count": 4
+       "count": 5
       },
       {
        "id": "arxiv:physics.optics",
        "label": "Optics",
        "emoji": "🔬",
        "code": "physics.optics",
-       "count": 25
+       "count": 24
       },
       {
        "id": "arxiv:physics.plasm-ph",
        "label": "Plasma Physics",
        "emoji": "🔬",
        "code": "physics.plasm-ph",
-       "count": 9
+       "count": 17
       },
       {
        "id": "arxiv:physics.pop-ph",
        "label": "Popular Physics",
        "emoji": "🔬",
        "code": "physics.pop-ph",
-       "count": 3
+       "count": 2
       },
       {
        "id": "arxiv:physics.soc-ph",
        "label": "Physics and Society",
        "emoji": "🔬",
        "code": "physics.soc-ph",
-       "count": 18
+       "count": 9
       },
       {
        "id": "arxiv:physics.space-ph",
@@ -965,7 +965,7 @@
        "label": "Biomolecules",
        "emoji": "🧬",
        "code": "q-bio.BM",
-       "count": 1
+       "count": 3
       },
       {
        "id": "arxiv:q-bio.CB",
@@ -979,7 +979,7 @@
        "label": "Genomics",
        "emoji": "🧬",
        "code": "q-bio.GN",
-       "count": 3
+       "count": 1
       },
       {
        "id": "arxiv:q-bio.MN",
@@ -1007,28 +1007,28 @@
        "label": "Populations and Evolution",
        "emoji": "🌱",
        "code": "q-bio.PE",
-       "count": 3
+       "count": 8
       },
       {
        "id": "arxiv:q-bio.QM",
        "label": "Quantitative Methods",
        "emoji": "📏",
        "code": "q-bio.QM",
-       "count": 12
+       "count": 8
       },
       {
        "id": "arxiv:q-bio.SC",
        "label": "Subcellular Processes",
        "emoji": "🔬",
        "code": "q-bio.SC",
-       "count": 3
+       "count": 1
       },
       {
        "id": "arxiv:q-bio.TO",
        "label": "Tissues and Organs",
        "emoji": "🫀",
        "code": "q-bio.TO",
-       "count": 2
+       "count": 1
       }
      ]
     },
@@ -1042,49 +1042,49 @@
        "label": "Computational Finance",
        "emoji": "💹",
        "code": "q-fin.CP",
-       "count": 5
+       "count": 4
       },
       {
        "id": "arxiv:q-fin.EC",
        "label": "Economics",
        "emoji": "📈",
        "code": "q-fin.EC",
-       "count": 1
+       "count": 10
       },
       {
        "id": "arxiv:q-fin.GN",
        "label": "General Finance",
        "emoji": "🏦",
        "code": "q-fin.GN",
-       "count": 3
+       "count": 1
       },
       {
        "id": "arxiv:q-fin.MF",
        "label": "Mathematical Finance",
        "emoji": "📊",
        "code": "q-fin.MF",
-       "count": 12
+       "count": 4
       },
       {
        "id": "arxiv:q-fin.PM",
        "label": "Portfolio Management",
        "emoji": "🏦",
        "code": "q-fin.PM",
-       "count": 3
+       "count": 2
       },
       {
        "id": "arxiv:q-fin.PR",
        "label": "Pricing of Securities",
        "emoji": "🏦",
        "code": "q-fin.PR",
-       "count": 1
+       "count": 3
       },
       {
        "id": "arxiv:q-fin.RM",
        "label": "Risk Management",
        "emoji": "🏦",
        "code": "q-fin.RM",
-       "count": 1
+       "count": 2
       },
       {
        "id": "arxiv:q-fin.ST",
@@ -1112,14 +1112,14 @@
        "label": "Applications",
        "emoji": "📈",
        "code": "stat.AP",
-       "count": 20
+       "count": 18
       },
       {
        "id": "arxiv:stat.CO",
        "label": "Computation",
        "emoji": "📈",
        "code": "stat.CO",
-       "count": 6
+       "count": 5
       },
       {
        "id": "arxiv:stat.ME",
@@ -1147,7 +1147,7 @@
        "label": "Statistics Theory",
        "emoji": "🎓",
        "code": "stat.TH",
-       "count": 29
+       "count": 26
       }
      ]
     }
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 716,
+   "total": 707,
    "groups": [
     {
      "id": "_all",
@@ -1254,7 +1254,7 @@
        "label": "Other AI Research",
        "emoji": "🔬",
        "code": "other",
-       "count": 22
+       "count": 24
       }
      ]
     }
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 526,
+   "total": 535,
    "groups": [
     {
      "id": "_all",
@@ -1837,7 +1837,7 @@
    "emoji": "🏦",
    "blurb": "Economics & finance working papers",
    "failed": false,
-   "total": 22,
+   "total": 29,
    "groups": [
     {
      "id": "_all",
@@ -1855,28 +1855,35 @@
        "label": "Development and Growth",
        "emoji": "📈",
        "code": "development-and-growth",
-       "count": 3
+       "count": 6
       },
       {
        "id": "nber:econometrics",
        "label": "Econometrics",
        "emoji": "📊",
        "code": "econometrics",
-       "count": 6
+       "count": 7
+      },
+      {
+       "id": "nber:environmental-and-resource-economics",
+       "label": "Environmental and Resource Economics",
+       "emoji": "🌱",
+       "code": "environmental-and-resource-economics",
+       "count": 4
       },
       {
        "id": "nber:financial-economics",
        "label": "Financial Economics",
        "emoji": "🏦",
        "code": "financial-economics",
-       "count": 5
+       "count": 7
       },
       {
        "id": "nber:health-education-and-welfare",
        "label": "Health, Education, and Welfare",
        "emoji": "🏥",
        "code": "health-education-and-welfare",
-       "count": 5
+       "count": 6
       },
       {
        "id": "nber:history",
@@ -1890,56 +1897,56 @@
        "label": "Industrial Organization",
        "emoji": "🏭",
        "code": "industrial-organization",
-       "count": 6
+       "count": 1
       },
       {
        "id": "nber:international-economics",
        "label": "International Economics",
        "emoji": "🌍",
        "code": "international-economics",
-       "count": 2
+       "count": 8
       },
       {
        "id": "nber:labor-economics",
        "label": "Labor Economics",
        "emoji": "👷",
        "code": "labor-economics",
-       "count": 6
+       "count": 7
       },
       {
        "id": "nber:macroeconomics",
        "label": "Macroeconomics",
        "emoji": "📉",
        "code": "macroeconomics",
-       "count": 3
+       "count": 7
       },
       {
        "id": "nber:microeconomics",
        "label": "Microeconomics",
        "emoji": "🧮",
        "code": "microeconomics",
-       "count": 8
+       "count": 6
       },
       {
        "id": "nber:other",
        "label": "Other",
        "emoji": "🏦",
        "code": "other",
-       "count": 6
+       "count": 1
       },
       {
        "id": "nber:public-economics",
        "label": "Public Economics",
        "emoji": "🏛️",
        "code": "public-economics",
-       "count": 3
+       "count": 6
       },
       {
        "id": "nber:regional-and-urban-economics",
        "label": "Regional and Urban Economics",
        "emoji": "🏙️",
        "code": "regional-and-urban-economics",
-       "count": 1
+       "count": 5
       }
      ]
     }
