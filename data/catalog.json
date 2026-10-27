@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-27T12:58:02.310Z",
+ "generatedAt": "2026-10-27T22:51:07.402Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 671,
+   "total": 684,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1426,
+   "total": 1427,
    "groups": [
     {
      "id": "_all",
@@ -1692,7 +1692,7 @@
        "label": "Orthopedics",
        "emoji": "🩺",
        "code": "orthopedics",
-       "count": 27
+       "count": 28
       },
       {
        "id": "medrxiv:otolaryngology",
