@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T22:49:14.175Z",
+ "generatedAt": "2026-10-31T13:17:05.262Z",
  "perCategory": 30,
  "sources": [
   {
@@ -8,7 +8,7 @@
    "emoji": "📄",
    "blurb": "Physics, maths, CS, economics and more",
    "failed": false,
-   "total": 4601,
+   "total": 0,
    "groups": [
     {
      "id": "cs",
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 536,
+   "total": 522,
    "groups": [
     {
      "id": "_all",
@@ -1284,7 +1284,7 @@
        "label": "Biochemistry",
        "emoji": "🧪",
        "code": "biochemistry",
-       "count": 29
+       "count": 30
       },
       {
        "id": "biorxiv:bioengineering",
