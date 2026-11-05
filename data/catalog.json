@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-04T15:04:37.032Z",
+ "generatedAt": "2026-11-05T00:10:00.976Z",
  "perCategory": 30,
  "sources": [
   {
@@ -1159,7 +1159,7 @@
    "emoji": "🤗",
    "blurb": "Trending AI papers, curated daily",
    "failed": false,
-   "total": 449,
+   "total": 397,
    "groups": [
     {
      "id": "_all",
@@ -1254,7 +1254,7 @@
        "label": "Other AI Research",
        "emoji": "🔬",
        "code": "other",
-       "count": 11
+       "count": 13
       }
      ]
     }
@@ -1266,7 +1266,7 @@
    "emoji": "🧬",
    "blurb": "Biology preprints",
    "failed": false,
-   "total": 535,
+   "total": 528,
    "groups": [
     {
      "id": "_all",
@@ -1471,7 +1471,7 @@
    "emoji": "🩺",
    "blurb": "Health sciences preprints",
    "failed": false,
-   "total": 1438,
+   "total": 1439,
    "groups": [
     {
      "id": "_all",
@@ -1734,7 +1734,7 @@
        "label": "Pharmacology & Therapeutics",
        "emoji": "🩺",
        "code": "pharmacology-and-therapeutics",
-       "count": 23
+       "count": 24
       },
       {
        "id": "medrxiv:primary-care-research",
@@ -1869,14 +1869,7 @@
        "label": "Financial Economics",
        "emoji": "🏦",
        "code": "financial-economics",
-       "count": 6
-      },
-      {
-       "id": "nber:general",
-       "label": "General",
-       "emoji": "🏦",
-       "code": "general",
-       "count": 2
+       "count": 7
       },
       {
        "id": "nber:growth-and-productivity",
@@ -1890,7 +1883,7 @@
        "label": "Health, Education, and Welfare",
        "emoji": "🏥",
        "code": "health-education-and-welfare",
-       "count": 4
+       "count": 5
       },
       {
        "id": "nber:history",
@@ -1918,14 +1911,14 @@
        "label": "Labor Economics",
        "emoji": "👷",
        "code": "labor-economics",
-       "count": 2
+       "count": 3
       },
       {
        "id": "nber:macroeconomics",
        "label": "Macroeconomics",
        "emoji": "📉",
        "code": "macroeconomics",
-       "count": 6
+       "count": 7
       },
       {
        "id": "nber:microeconomics",
@@ -2060,7 +2053,7 @@
        "label": "Social Sciences",
        "emoji": "👥",
        "code": "social-sciences",
-       "count": 3
+       "count": 2
       }
      ]
     }
